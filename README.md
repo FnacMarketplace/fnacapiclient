@@ -2,11 +2,12 @@
 > A comprehensive PHP library to connect your shop to Fnac.com Marketplace
 
 If you are managing a shop on Fnac.com Marketplace, you would probably want to automate some repetitive tasks upon offers or orders.
-Fnac.com offers a REST API take control over your account and this library can help you quickly develop your custom client to connect and use all the features of your Fnac Marketplace seller account.
+Fnac.com offers a REST API to take control over your account and this library can help you quickly develop your custom client to connect and use all the features of your Fnac Marketplace seller account.
 
 ## Installing / Getting started
 
 Make sure your PHP version is at least 5.3.2, and that you have php5-xsl mod installed.
+You will also need to have composer installed on your host.
 
 Simply clone the project into a private directory:
 
@@ -20,6 +21,12 @@ And launch the installation
 composer install
 ```
 
+or with
+
+```shell
+php composer.phar install
+```
+
 Or download and extract the archive in that directory (https://marketplace.ws.fd-recette.net/docs/api/2.6/download/fnacapiclient.tgz)
 
 ## Configuration
@@ -31,6 +38,15 @@ vi config/config.yml
 ```
 
 You should be provided with 3 ids: partner_id, shop_id and key. As it is an .yml file, be careful on the indentation.
+Here is an example:
+```yaml
+fnac_api_client:
+  partner_id: 509490E8-7341-AE98-F708-11768C65539B
+  shop_id: 0EA474BC-BE18-5F77-D7F0-E509DE2AABC6
+  key: 0D00AF6D-D33F-B5F1-3A5F-BF153C8DAE08
+  host: https://marketplace.ws.fd-recette.net/api.php
+```
+
 
 You are now ready to go.
 
