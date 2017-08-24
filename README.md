@@ -47,7 +47,6 @@ fnac_api_client:
   host: https://marketplace.ws.fd-recette.net/api.php
 ```
 
-
 You are now ready to go.
 
 ## Features
@@ -59,7 +58,12 @@ The Fnac Marketplace PHP Client offers methods to call the available services su
 * Manage claims on orders and eventually refund them
 * Retrieve the best prices among the competition
 
-This client is shipped with a graphical user interface. Once your ids properly added in the config.yml file, you can open it in your browser at http://yourhost.com/my_project/index.php
+This client is shipped with a graphical user interface. Once your ids properly added in the config.yml file, you can open it in your browser at http://yourhost.com/your_project/index.php
+
+## Documentation
+
+The documentation of our API and a complete how-to-use guide is available on Fnac Marketplace API test sandbox here: https://marketplace.ws.fd-recette.net/docs/api/2.6/index.html
+You will need to get your access by demanding it from the Fnac Marketplace commercial support. 
 
 ## Contributing
 
