@@ -1,0 +1,5 @@
+fnac_api_client:
+  partner_id:
+  shop_id:
+  key:
+  host: https://marketplace.ws.fd-recette.net/api.php
