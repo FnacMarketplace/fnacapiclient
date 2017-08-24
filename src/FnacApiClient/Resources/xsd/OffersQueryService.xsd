@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://www.fnac.com/schemas/mp-dialog.xsd" elementFormDefault="qualified" xmlns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:mstns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include schemaLocation="base.xsd"/>
+
+  <!-- OFFER QUERY SERVICE -->
+
+    <!-- OFFER QUERY REQUEST -->
+    <xs:complexType name="offers_query_request">
+      <xs:complexContent>
+        <xs:extension base="base_request">
+          <xs:sequence>
+            <xs:element name="paging" type="xs:int" minOccurs="0" maxOccurs="1" />
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+              <xs:element name="date" type="_offer_date_constraint_query_request" />
+              <xs:element name="quantity" type="_offer_quantity_constraint_query_request" />
+              <xs:element name="product_fnac_id" type="xs:string" />
+              <xs:element name="offer_fnac_id" type="xs:string" />
+              <xs:element name="offer_seller_id" type="xs:string" />
+              <xs:element name="with_free_shipping">
+                <xs:complexType/>
+              </xs:element>
+              <xs:element name="promotion_types" type="_promotion_types" />
+              <xs:element name="promotion_uids" type="_promotion_uids" />
+            </xs:choice>
+          </xs:sequence>
+          <xs:attribute name="results_count" type="xs:positiveInteger" use="optional" default="100" />
+          <xs:attribute name="with_fees" type="xs:string" use="optional" default="false" />
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="_promotion_types">
+      <xs:sequence>
+        <xs:element name="promotion_type" type="promotion_type" minOccurs="1" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="_promotion_uids">
+      <xs:sequence>
+        <xs:element name="promotion_uid" type="promotion_uid" minOccurs="1" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="_offer_date_constraint_query_request">
+      <xs:all>
+        <xs:element name="min" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+        <xs:element name="max" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+      </xs:all>
+      <xs:attribute name="type" type="offer_state_constraint" use="required" />
+    </xs:complexType>
+
+    <xs:complexType name="_offer_quantity_constraint_query_request">
+      <xs:attribute name="mode" type="offer_quantity_constraint" default="Equals" />
+      <xs:attribute name="value" type="xs:nonNegativeInteger" default="0" />
+    </xs:complexType>
+
+    <!-- OFFER QUERY RESPONSE -->
+    <xs:complexType name="offers_query_response">
+      <xs:complexContent>
+        <xs:extension base="base_response">
+          <xs:sequence>
+            <xs:element name="error" type="error" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="page" type="xs:int" minOccurs="0" maxOccurs="1" />
+            <xs:element name="total_paging" type="xs:int" minOccurs="0" maxOccurs="1" />
+            <xs:element name="nb_total_per_page" type="xs:int" minOccurs="0" maxOccurs="1" />
+            <xs:element name="nb_total_result" type="xs:int" minOccurs="0" maxOccurs="1" />
+            <xs:element name="offer" type="_offer_query_response" minOccurs="0" maxOccurs="unbounded" />
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+
+	<xs:complexType name="_offer_query_response">
+		<xs:all>
+			<xs:element name="product_name" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="product_fnac_id" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="offer_fnac_id" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="offer_seller_id" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="price" type="price_090_20000" minOccurs="1" maxOccurs="1" />
+			<xs:element name="instead_of_price" type="price_090_20000" minOccurs="0" maxOccurs="1" />
+			<xs:element name="fee_excluding_taxes" type="xs:decimal" minOccurs="1" maxOccurs="1" />
+			<xs:element name="fee_including_all_taxes" type="xs:decimal" minOccurs="1" maxOccurs="1" />
+			<xs:element name="promotion_code_id" type="xs:integer" minOccurs="0" maxOccurs="1" />			
+			<xs:element name="adherent_price" type="price_090_20000" minOccurs="0" maxOccurs="1" />
+			<xs:element name="promotion_code_adherent_id" type="xs:integer" minOccurs="0" maxOccurs="1" />			
+			<xs:element name="product_state" type="product_state" minOccurs="1" maxOccurs="1" />
+			<xs:element name="quantity" type="xs:nonNegativeInteger" minOccurs="1" maxOccurs="1" />
+			<xs:element name="description" type="string255" minOccurs="1" maxOccurs="1" />
+			<xs:element name="internal_comment" type="string255" minOccurs="1" maxOccurs="1" />
+			<xs:element name="product_url" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="image" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="nb_messages" type="xs:nonNegativeInteger" minOccurs="0" maxOccurs="1" />
+			<xs:element name="showcase" type="nullNonNegativeInteger" minOccurs="0" maxOccurs="1" />
+		</xs:all>
+	</xs:complexType>
+
+    <!-- SERVICES (for requests and responses) -->
+    <xs:element name="offers_query" type="offers_query_request" />
+    <xs:element name="offers_query_response" type="offers_query_response" />
+
+</xs:schema>

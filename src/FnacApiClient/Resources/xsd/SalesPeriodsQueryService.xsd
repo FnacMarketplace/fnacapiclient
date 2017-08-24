@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://www.fnac.com/schemas/mp-dialog.xsd" elementFormDefault="qualified" xmlns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:mstns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include schemaLocation="base.xsd"/>
+
+  <!-- SALES PERIODS QUERY SERVICE -->
+
+    <!-- SALES PERIODS QUERY REQUEST -->
+    <xs:complexType name="sales_periods_query_request">
+      <xs:complexContent>
+        <xs:extension base="base_request">
+          <xs:sequence>
+            <xs:element name="paging" type="xs:int" minOccurs="0" maxOccurs="1" />
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+              <xs:element name="date" type="_range_date_constraint_query_request" />
+              <xs:element name="date" type="_range_date_constraint_query_request" />
+              <xs:element name="reference" type="xs:string" />
+            </xs:choice>
+          </xs:sequence>
+          <xs:attribute name="results_count" type="xs:positiveInteger" use="optional" default="100" />
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="_range_date_constraint_query_request">
+      <xs:all>
+        <xs:element name="min" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+        <xs:element name="max" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+      </xs:all>
+      <xs:attribute name="type" type="range_date_state_constraint" use="required" />
+    </xs:complexType>
+
+    <!-- SALES PERIODS QUERY RESPONSE -->
+    <xs:complexType name="sales_periods_query_response">
+      <xs:complexContent>
+        <xs:extension base="base_response">
+          <xs:sequence>
+            <xs:element name="error" type="error" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="page" type="xs:int" minOccurs="0" maxOccurs="1" />
+            <xs:element name="total_paging" type="xs:int" minOccurs="0" maxOccurs="1" />
+            <xs:element name="nb_total_per_page" type="xs:int" minOccurs="0" maxOccurs="1" />
+            <xs:element name="nb_total_result" type="xs:int" minOccurs="0" maxOccurs="1" />
+            <xs:element name="sale_periods_list" type="_sales_periods_list_query_response" minOccurs="0" maxOccurs="unbounded" />
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="_sales_periods_list_query_response">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="sale_periods" type="_sale_periods_query_response" />
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="_sale_periods_query_response">
+        <xs:sequence>
+            <xs:element name="label" type="_label_18n_response" minOccurs="1" maxOccurs="unbounded" />
+            <xs:element name="reference" type="xs:string" minOccurs="1" maxOccurs="1" />
+            <xs:element name="starts_at" type="xs:string" minOccurs="1" maxOccurs="1" />
+            <xs:element name="ends_at" type="xs:string" minOccurs="1" maxOccurs="1" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType  name="_label_18n_response">
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="culture" type="string5" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+
+
+    <!-- SERVICES (for requests and responses) -->
+    <xs:element name="sales_periods_query" type="sales_periods_query_request" />
+    <xs:element name="sales_periods_query_response" type="sales_periods_query_response" />
+
+</xs:schema>

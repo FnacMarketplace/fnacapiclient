@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://www.fnac.com/schemas/mp-dialog.xsd" elementFormDefault="qualified" xmlns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:mstns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include schemaLocation="base.xsd"/>
+
+  <!-- type message  -->
+  <xs:simpleType name="message_type">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Presents the different type of message]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="OFFER">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Message associated with an offer]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ORDER">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Message associated with an order]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- constraint  message date sort -->
+  <xs:simpleType name="message_date_constraint_type">
+  <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Presents the date constraint type of message]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="CREATED_AT">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[created date]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="UPDATED_AT">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[created date]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- constraint  message date sort -->
+  <xs:simpleType name="message_sort_constraint_type">
+  <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Presents the sort constraint type of message]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="DESC">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[descending sort]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ASC">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[ascending sort]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- type message  -->
+  <xs:simpleType name="message_state">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Presents the status the message]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="READ">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Message is readed by the seller]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="UNREAD">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Message is unreaded by the seller]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- type message  -->
+  <xs:simpleType name="message_archived">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Presents the archived status of the message]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="TRUE">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Message is archived by the seller]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FALSE">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Message is not archived by the seller]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- from_type message  -->
+  <xs:simpleType name="_from_type">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Define the message origine]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="CLIENT">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Message come from client]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CALLCENTER">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Message come from call center]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SELLER">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Message come from seller]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SYSTEM">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Message come from system]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="_from_types">
+    <xs:sequence>
+      <xs:element name="from_type" type="_from_type" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+
+  <!-- MESSAGE QUERY REQUEST -->
+  <xs:complexType name="message_query_request">
+    <xs:complexContent>
+      <xs:extension base="base_request">
+        <xs:sequence>
+          <xs:element name="paging" type="xs:int" minOccurs="0" maxOccurs="1" />
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="date" type="_messages_date_constraints_query_request" />
+            <xs:element name="message_type" type="message_type"/>
+            <xs:element name="message_archived" type="message_archived"/>
+            <xs:element name="message_state" type="message_state" />
+            <xs:element name="message_id" type="uuid" />
+            <xs:element name="product_fnac_id" type="xs:string" />
+            <xs:element name="order_fnac_id" type="xs:string" />
+            <xs:element name="offer_fnac_id" type="xs:string" />
+            <xs:element name="offer_seller_id" type="xs:string" />
+            <xs:element name="sort_by">
+              <xs:complexType>
+                <xs:simpleContent>
+                   <xs:extension base="message_date_constraint_type">
+                      <xs:attribute name="type" type="message_sort_constraint_type" use="required"/>
+                   </xs:extension>
+                </xs:simpleContent>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="message_from_types" type="_from_types" minOccurs="0" maxOccurs="1" />
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="results_count" type="xs:positiveInteger" use="optional" default="100" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="_messages_sort_constraints_query_request">
+    <xs:sequence>
+      <xs:element name="sort_by" type="message_date_constraint_type" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="type" type="message_sort_constraint_type" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="_messages_date_constraints_query_request">
+    <xs:sequence>
+      <xs:element name="min" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+      <xs:element name="max" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="type" type="order_state_constraint" use="required" />
+  </xs:complexType>
+
+  <!-- MESSAGE QUERY RESPONSE -->
+  <xs:complexType name="message_query_response">
+    <xs:complexContent>
+      <xs:extension base="base_response">
+        <xs:sequence>
+          <xs:element name="messages_unread_result" type="xs:int" minOccurs="1" maxOccurs="1" />
+          <xs:element name="messages_read_result" type="xs:int" minOccurs="1" maxOccurs="1" />
+          <xs:element name="error" type="error" minOccurs="0" maxOccurs="unbounded" />
+          <xs:element name="page" type="xs:int" minOccurs="0" maxOccurs="1" />
+          <xs:element name="total_paging" type="xs:int" minOccurs="0" maxOccurs="1" />
+          <xs:element name="nb_total_result" type="xs:int" minOccurs="0" maxOccurs="1" />
+          <xs:element name="message" type="_message_query_response" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="_message_query_response">
+    <xs:sequence>
+      <xs:element name="message_id" type="xs:string" minOccurs="1" maxOccurs="1" />
+      <xs:element name="message_referer" type="message_referer" minOccurs="1" maxOccurs="1" />
+      <xs:element name="message_from" type="message_from" minOccurs="0" maxOccurs="1" />
+      <xs:element name="message_offer_title" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="message_subject" type="xs:string" minOccurs="1" maxOccurs="1" />
+      <xs:element name="message_description" type="xs:string" minOccurs="1" maxOccurs="1" />
+      <xs:element name="created_at" type="xs:dateTime" minOccurs="1" maxOccurs="1" />
+      <xs:element name="updated_at" type="xs:dateTime" minOccurs="1" maxOccurs="1" />
+      <xs:element name="answer" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="answer_at" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+      <xs:element name="message_file" type="message_file" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="state" type="message_state_type" use="required" />
+    <xs:attribute name="archived" type="message_archive_type" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="message_file">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="url" type="xs:string"/>
+      <xs:element name="filetype" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="message_referer">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Message referer]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="type" type="message_type" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <!-- types of message sender -->
+  <xs:simpleType name="message_from_type">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Define message sender]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="CLIENT">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Message sent by customer]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CALLCENTER">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Message sent by Fnac service]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SELLER">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Message sent by seller]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="message_from">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Message sender]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="type" type="message_from_type" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  
+  <!-- Message state types -->
+  <xs:simpleType name="message_state_type">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Message state type]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="READ">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Message is read]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="UNREAD">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Message is unread]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  
+  
+  <!-- Message archive state -->
+  <xs:simpleType name="message_archive_type">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Message state type]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="TRUE">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Message is archived]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FALSE">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Message is not archived]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <!-- SERVICES (for requests and responses) -->
+  <xs:element name="messages_query" type="message_query_request" />
+  <xs:element name="messages_query_response" type="message_query_response" />
+
+</xs:schema>

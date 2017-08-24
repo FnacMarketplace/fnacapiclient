@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://www.fnac.com/schemas/mp-dialog.xsd" elementFormDefault="qualified" xmlns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:mstns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include schemaLocation="base.xsd"/>
+
+  <!-- CARRIER QUERY SERVICE -->
+
+  <!-- CARRIER QUERY REQUEST -->
+  <xs:complexType name="carriers_query_request">
+    <xs:complexContent>
+      <xs:extension base="base_request">
+        <xs:sequence>
+          <xs:element name="error" type="error" minOccurs="0" maxOccurs="unbounded" />
+          <xs:element name="query" type="query_string" minOccurs="1" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:simpleType name="query_string">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Presents the value of carriers query]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="all">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[all the carrier your shop is allowed to see]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- CARRIER QUERY RESPONSE -->
+  <xs:complexType name="carriers_query_response">
+    <xs:complexContent>
+      <xs:extension base="base_response">
+        <xs:sequence>
+          <xs:element name="error" type="error" minOccurs="0" maxOccurs="unbounded" />
+          <xs:element name="carrier" type="carrier" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="carrier">
+      <xs:sequence>
+        <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1" />
+      </xs:sequence>
+      <xs:attribute name="global" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:int">
+            <xs:minExclusive value="0"/>
+            <xs:maxInclusive value="1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="code" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:pattern value="([A-Z_]*)"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+  </xs:complexType>
+
+  <!-- SERVICES (for requests and responses) -->
+  <xs:element name="carriers_query" type="carriers_query_request" />
+  <xs:element name="carriers_query_response" type="carriers_query_response" />
+
+</xs:schema>

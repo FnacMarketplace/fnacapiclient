@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://www.fnac.com/schemas/mp-dialog.xsd" elementFormDefault="qualified" xmlns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:mstns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include schemaLocation="base.xsd"/>
+
+<!-- SERVICES (for requests and responses) -->
+  <xs:element name="offers_update" type="offers_update_request" />
+  <xs:element name="offers_update_response" type="offer_update_response" />
+
+<!-- OFFERS UPDATE SERVICE -->
+
+  <!-- OFFERS UPDATE REQUEST -->
+  <xs:complexType name="offers_update_request">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Define the offer update request.
+          Each Offer will be provided mandatories field : a product_reference , an offer_reference, a price and a product_state.
+          ]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="base_request">
+        <xs:sequence>
+          <xs:element name="offer" type="_offer_update_request" minOccurs="1" maxOccurs="unbounded" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+
+  <!-- Fib promotion definition -->
+  <xs:complexType name="promotion_be">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Define the different promotion to an offer price.
+          Each Offer will be provided mandatories field : a promotion price , a type, a priority.
+          ]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:all>
+      <xs:element name="price" type="price_090_20000" minOccurs="1" maxOccurs="1" />
+      <xs:element name="type" type="_promotion_type" minOccurs="1" maxOccurs="1" />
+      <xs:element name="priority" type="xs:nonNegativeInteger" minOccurs="1" maxOccurs="1" />
+    </xs:all>
+  </xs:complexType>
+
+  <xs:complexType name="promotions">
+    <xs:sequence>
+      <xs:element name="promotion" type="promotion_be" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  <!-- /Fib promotion definition -->
+
+  <xs:complexType name="pictures">
+    <xs:all>
+      <xs:element name="picture_1" type="string255" minOccurs="0" maxOccurs="1" />
+      <xs:element name="picture_2" type="string255" minOccurs="0" maxOccurs="1" />
+      <xs:element name="picture_3" type="string255" minOccurs="0" maxOccurs="1" />
+      <xs:element name="picture_4" type="string255" minOccurs="0" maxOccurs="1" />
+    </xs:all>
+  </xs:complexType>
+
+  <!-- Seller promotion definition -->
+    <!-- Triggers definition -->
+  <xs:simpleType name="trigger_cart_type">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Defines the types available for trigger_cart]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="MinSellerAmount">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Trigger of type MinSellerAmount : total amount for a seller's offers in a cart]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="MinSellerQuantity">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Trigger of type MinSellerQuantity : number of products of a seller in a cart]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="MinOfferQuantity">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Trigger of type MinOfferQuantity : quantity of a specific offer in a cart]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="trigger_cart">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Define the trigger_cart trigger]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="type" type="trigger_cart_type" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:simpleType name="trigger_customer_type">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Promotion is for all clients or just adherents]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="all">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Trigger works for all clients]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="adherent">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Trigger works for adherent client only]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="trigger_promotion_code">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="50"/>
+      <xs:pattern value="[a-zA-Z0-9]+"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="triggers">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Allow sellers to define triggers that activate the promotion]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:all>
+      <xs:element name="trigger_cart" type="trigger_cart" minOccurs="0" maxOccurs="1" />
+      <xs:element name="trigger_customer_type" type="trigger_customer_type" minOccurs="1" maxOccurs="1" />
+      <xs:element name="trigger_promotion_code" type="trigger_promotion_code" minOccurs="0" maxOccurs="1" />
+    </xs:all>
+  </xs:complexType>
+    <!-- /Triggers definition -->
+
+  <xs:simpleType name="discount_type">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Type of discount : percentage or fixed value to be withdrawn from price]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="percentage">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[discount value is a percentage]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="fixed">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[discount value is a fixed value]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="promotion">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Allow sellers to define a promotion by offer if needed. There are several kind of promotion, each with specific fields]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:all>
+      <xs:element name="sales_period_reference" type="xs:string" minOccurs="0" maxOccurs="1" /> <!-- mandatory for Sales -->
+      <xs:element name="promotion_uid" type="promotion_uid" minOccurs="0" maxOccurs="1" /> <!-- not mandatory -->
+      <xs:element name="starts_at" type="xs:dateTime" minOccurs="1" maxOccurs="1" />
+      <xs:element name="ends_at" type="xs:dateTime" minOccurs="1" maxOccurs="1" />
+      <xs:element name="discount_type" type="discount_type" minOccurs="0" maxOccurs="1" /> <!-- not mandatory for FreeShipping -->
+      <xs:element name="discount_value" type="xs:decimal" minOccurs="0" maxOccurs="1" /> <!-- not mandatory for FreeShipping -->
+      <xs:element name="triggers" type="triggers" minOccurs="0" maxOccurs="1" />
+    </xs:all>
+    <xs:attribute name="type" type="promotion_type" />
+  </xs:complexType>
+  <!-- /Seller promotion definition -->
+
+  <xs:complexType name="_offer_update_request">
+    <xs:all>
+      <xs:element name="product_reference" type="product_reference" minOccurs="0" maxOccurs="1" />
+      <xs:element name="offer_reference" type="offer_reference" minOccurs="1" maxOccurs="1" />
+      <xs:element name="price" type="price_090_20000" minOccurs="0" maxOccurs="1" />
+      <xs:element name="product_state" type="product_state" minOccurs="0" maxOccurs="1" />
+      <xs:element name="quantity" type="quantity_0_9999" minOccurs="0" maxOccurs="1" default="1" />
+      <xs:element name="description" type="string255" minOccurs="0" maxOccurs="1" />
+      <xs:element name="internal_comment" type="string255" minOccurs="0" maxOccurs="1" />
+      <xs:element name="showcase" type="xs:nonNegativeInteger" minOccurs="0" maxOccurs="1" />
+      <xs:element name="instead_of_price" type="price_090_20000" minOccurs="0" maxOccurs="1" />
+      <xs:element name="adherent_price" type="price_090_20000" minOccurs="0" maxOccurs="1" />
+      <xs:element name="is_shipping_free" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+      <xs:element name="promotion" type="promotion" minOccurs="0" maxOccurs="1" /> <!-- new promotion project -->
+      <xs:element name="promotions" type="promotions" minOccurs="0" maxOccurs="1" /> <!-- promotion belge -->
+      <!--<xs:element name="product_trademark" type="string255" minOccurs="0" maxOccurs="1" />-->
+      <xs:element name="treatment" type="offer_treatment" minOccurs="0" maxOccurs="1" />
+      <xs:element name="pictures" type="pictures" minOccurs="0" maxOccurs="1" />
+      <xs:element name="logistic_type_id" type="string255" minOccurs="0" maxOccurs="1" />
+    </xs:all>
+  </xs:complexType>
+
+  <!-- OFFERS UPDATE RESPONSE -->
+  <xs:complexType name="offer_update_response">
+    <xs:complexContent>
+      <xs:extension base="base_response">
+        <xs:sequence>
+          <xs:element name="batch_id" type="uuid" minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The batch identifier for this request, for getting more advanced results, use "offer_batch_status_request"]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="error" type="error" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,589 @@
+/*
+    Document   : FnacApiGui.css
+    Created on : 18 juin 2013, 18:06:13
+    Author     : Somaninn PROK
+    Description:
+        Fnac API Client GUI stylesheet
+*/
+
+
+/* http://meyerweb.com/eric/tools/css/reset/
+    v2.0 | 20110126
+    License: none (public domain)
+ */
+
+ html, body, div, span, applet, object, iframe,
+ h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+ a, abbr, acronym, address, big, cite, code,
+ del, dfn, em, img, ins, kbd, q, s, samp,
+ small, strike, strong, sub, sup, tt, var,
+ b, u, i, center,
+ dl, dt, dd, ol, ul, li,
+ fieldset, form, label, legend,
+ table, caption, tbody, tfoot, thead, tr, th, td,
+ article, aside, canvas, details, embed,
+ figure, figcaption, footer, header, hgroup,
+ menu, nav, output, ruby, section, summary,
+ time, mark, audio, video {
+         margin: 0;
+         padding: 0;
+         border: 0;
+         font-size: 100%;
+         font: inherit;
+         vertical-align: baseline;
+ }
+ /* HTML5 display-role reset for older browsers */
+ article, aside, details, figcaption, figure,
+ footer, header, hgroup, menu, nav, section {
+         display: block;
+ }
+ body {
+         line-height: 1;
+ }
+ ol, ul {
+         list-style: none;
+ }
+ blockquote, q {
+         quotes: none;
+ }
+ blockquote:before, blockquote:after,
+ q:before, q:after {
+         content: '';
+         content: none;
+ }
+ table {
+         border-collapse: collapse;
+         border-spacing: 0;
+ }
+
+/*********************************/
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+header {
+  height: 1.1em;
+  padding: 0.5em;
+  background: #E0882F;
+  border-bottom: thin solid #BF5E00;
+
+  color: #FFF;
+  font-size: 2em;
+  font-weight: bold;
+}
+
+h3 {
+  margin: 1em 0;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: center;
+}
+
+hr.clear {
+    clear: both;
+    visibility: hidden;
+}
+
+/* Homepage component */
+
+#dashboard {
+  min-height: 500px;
+  color: #333;
+  background: #EFEFEF;
+}
+
+#dashboard #params {
+  font-size: 0.9em;
+  width: 400px;
+  margin: 1em;
+  padding: 1em;
+  float: left;
+}
+#dashboard #params th {
+  width: 25%;
+  text-align: left;
+}
+
+#dashboard h2 {
+  padding: 0 0 10px 0;
+  font-size: 14pt;
+}
+
+#dashboard tr {
+  height: 1.5em;
+}
+
+#dashboard #connect_status {
+  float: left;
+  margin: 1em;
+  padding: 1em;
+  height: 120px;
+  min-width: 120px;
+  border: solid thin #CCC;
+}
+
+#connect_status h2 {
+  color: #FFFFFF;
+  font-size: 11pt;
+  padding: 0 0 10px;
+}
+
+#connect_status p {
+  bottom: -45px;
+  color: #FFFFFF;
+  font-size: 45pt;
+  position: relative;
+  right: 0;
+  text-align: right;
+}
+
+#dashboard .infobox {
+  float: left;
+  margin: 1em;
+  padding: 1em;
+  height: 120px;
+  min-width: 120px;
+  border: solid thin #CCC;
+}
+
+#dashboard #auth_error {
+  float: left;
+  margin: 1em;
+  padding: 1em;
+  height: 120px;
+}
+
+#dashboard .infobox h2 {
+  color: #666;
+  font-size: 11pt;
+  padding: 0 0 10px;
+}
+#dashboard .infobox p {
+  bottom: -45px;
+  color: #666;
+  font-size: 45pt;
+  position: relative;
+  right: 0;
+  text-align: right;
+}
+
+.OK {
+  background:#339900;
+}
+
+.NOK {
+  background:#cc0000;
+}
+
+/* Navigation menu */
+nav {
+  height: 1.2em;
+  padding: 0.5em;
+  background: #1299DA;
+  display: block;
+  border-bottom: solid thin #09719F;
+
+  font-size: 1.2em;
+}
+
+nav li {
+  width: 10%;
+  display: inline-block;
+}
+
+nav a {
+  color:#FFF;
+  text-decoration: none;
+}
+
+/* Orders query states menu */
+ul.subnav {
+  background: #6FBCDF;
+  border-bottom: thin solid #5794AF;
+  display: block;
+  font-size: 1em;
+  height: 1em;
+  padding: 0.5em;
+}
+
+ul.subnav li {
+  width: 10%;
+  display: inline-block;
+  height: 100%;
+  padding-bottom: 0.2em;
+}
+
+ul.subnav li.active {
+  border-bottom: thick solid #5794AF;
+}
+
+ul.subnav a {
+  color:#FFF;
+  text-decoration: none;
+}
+
+/* Offers, orders and batches components */
+
+#paging {
+  padding: 0.5em;
+  background: #CCC;
+  border-bottom: thin solid #9F9F9F;
+
+  text-align: center;
+  font-size: 1em;
+  color: #666;
+  font-weight: bold;
+}
+
+#data {
+  background: #EFEFEF;
+}
+
+#offers_query_table,
+#batch_query_table {
+  width: 100%
+}
+
+#data thead
+{
+  width: 100%;
+  text-align: left;
+}
+
+#data th {
+  padding: 1em;
+  font-weight: bold;
+  color: #444;
+}
+#data th.small {
+  width: 10%;
+}
+
+#data tr {
+  border-bottom: solid thin #CCCCCC;
+  font-size: 10pt;
+  height: 2em;
+}
+
+#data tr:hover {
+  background: #FFF;
+}
+
+#data td {
+  padding: 1em;
+  vertical-align: middle;
+}
+
+#offers_query_table td a.product_link {
+  color: #333;
+  text-decoration: none;
+}
+
+#offers_query_table td img {
+  height: 80px;
+}
+
+#orders_query_table td a:hover,
+#batch_query_table td a:hover {
+  text-decoration: underline;
+}
+
+.update_button {
+  border: none;
+  background: transparent;
+}
+.delete_button {
+  border: solid #EEE;
+  padding: 5px;
+  color: white;
+  background: #FF5F5F;
+  font-weight: bold;
+  text-decoration: none;
+}
+.update_button:hover, .delete_button:hover, .update_button:focus, .delete_button:focus {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+#pager {
+  width: 100%;
+  height: 2.5em;
+  background: #CCC;
+
+  text-align: center;
+  font-size: 1.2em;
+  font-size: 1.2em;
+}
+
+#pager a {
+  padding: 0.5em;
+  display: inline-block;
+  width: 1em;
+  color: #666;
+}
+
+.no_orders {
+  width: 100%;
+  height: 100px;
+  padding: 2em;
+  text-align: center;
+  font-weight: bold;
+  color: #666;
+}
+
+#confirm_response {
+  text-align: center;
+  padding: 1em 0;
+  color: #FFF;
+  background: green;
+}
+
+#confirm_response a {
+  color: #FFF;
+}
+
+/* Orders details */
+
+.detailed_order {
+  display: none;
+  background: #FFF;
+  border: solid thin #666;
+  width: 630px;
+  padding: 1em;
+}
+
+.detailed_order_button:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.detailed_order h2 {
+  font-size: 14pt;
+  border-bottom: solid thin #CCC;
+  padding-bottom: 1em;
+}
+
+.order_detail {
+  padding: 1em;
+  height: 80px;
+}
+
+.order_detail_col1 {
+  float: left;
+  font-size: 24pt;
+  padding-right: 0.25em;
+}
+
+.order_detail_col2 {
+  float: left;
+  width: 250px;
+  padding-right: 15px;
+  margin-bottom: 15px;
+}
+
+.order_detail_col3 {
+  float: left;
+  border-left: solid thin #CCC;
+  padding-left: 15px;
+}
+
+.order_detail_col4 {
+  float: right;
+  font-size: 24pt;
+  margin-left: 20px;
+  padding-left: 15px;
+  text-align: right;
+  border-left: solid thin #CCC;
+}
+
+.order_total_amount {
+  clear: both;
+  width: 100%;
+  border-top: solid thin #CCC;
+  text-align: right;
+  padding-top: 0.7em;
+  font-size: 24pt;
+}
+
+.order_detail_actions {
+  width: 100%;
+  border-top: solid thin #CCC;
+  text-align: center;
+  padding-top: 0.7em;
+  font-size: 24pt;
+  height: 50px;
+  margin-top: 15px;
+}
+
+.addresses {
+   padding: 1em 0;
+   border-top: solid thin #CCC;
+}
+
+.billing_address, .shipping_address {
+  float: left;
+  width: 50%;
+  line-height: 1.2em;
+}
+
+.billing_address h3, .shipping_address h3 {
+  font-weight: bold;
+  font-size: 12pt;
+}
+
+.close_button {
+  display: block;
+  cursor: pointer;
+  float: right;
+}
+
+.main_info {
+  font-size: 14pt;
+  padding-bottom: 0.25em;
+}
+
+.side_info {
+  font-size: 10pt;
+  padding-bottom: 0.25em;
+  color: #666;
+  font-style: italic;
+}
+.status {
+  font-style: normal;
+  font-weight: bold;
+}
+
+.error_message {
+  color: red;
+}
+
+.accept, .refuse {
+  float: left;
+  width: 49%;
+}
+
+.ship {
+  width: 100px;
+  margin: 0 auto;
+}
+
+.accept a, .refuse a, .ship a {
+  text-decoration: none;
+}
+
+.accept a:hover, .refuse a:hover, .ship a:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+
+.accept a, .ship a {
+  color: #00A000;
+}
+
+.refuse a {
+  color: #990000;
+}
+
+/* batch status details */
+
+#batch {
+  padding: 0.5em 0;
+}
+
+#batch_status_data {
+  width: 100%;
+  font-size: 10pt;
+}
+
+#batch_status_data table {
+  width: 600px;
+  margin: 0 auto;
+  background: #EFEFEF;
+}
+
+#batch_status_data .infos {
+   padding: 0.5em;
+   border: solid thick #EFEFEF;
+   background: #FFF;
+}
+
+#batch_status_data .status {
+   border: solid #EFEFEF thick;
+   color: #FFF;
+   text-align: center;
+   width: 65px;
+   font-weight: bold;
+   vertical-align:middle;
+}
+
+#batch_status_data .ok {
+   background: green;
+}
+
+#batch_status_data .error {
+   background: red;
+}
+
+footer {
+  height: 2em;
+  padding: 1em;
+  background: #666;
+
+  color: #FFF;
+  text-align: center;
+  font-size: 1em;
+}
+
+/* XML debug section */
+
+#debug_info_button {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 100;
+  cursor: pointer;
+}
+
+#debug_info {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 100;
+  width: 35%;
+  padding: 2em 2em;
+  background: #fefefe;
+  border: solid thin #666;
+  height: 85%;
+  overflow-y: auto;
+}
+#debug_info h1 {
+  margin: 2em 0 1em 0;
+  padding: 0;
+  font-size: 1.2em;
+}
+#hideXML {
+  text-align: right;
+  cursor: pointer;
+}
+#debug_info code {
+  font: 0.8em monospace;
+  white-space: pre-wrap;
+}
+#debug_info code span.bracket {
+  color: #00f;
+}
+#debug_info code span.xmlbracket {
+  color: #800000;
+}
+#debug_info code span.tag {
+  color: #808000;
+}
+#debug_info code span.attr {
+  color: #800080;
+}
+#debug_info code span.value {
+  color: #f0f;
+}

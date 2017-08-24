@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://www.fnac.com/schemas/mp-dialog.xsd" elementFormDefault="qualified" xmlns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:mstns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:include schemaLocation="base.xsd"/>
+
+<!-- CLIENT ORDER COMMENTS QUERY SERVICE -->
+
+	<!-- CLIENT ORDER COMMENTS QUERY REQUEST -->
+	<xs:complexType name="client_order_comments_query_request">
+		<xs:complexContent>
+			<xs:extension base="base_request">
+				<xs:sequence>
+				    <xs:element name="paging" type="xs:int" minOccurs="0" maxOccurs="1" />
+					<xs:choice minOccurs="0" maxOccurs="unbounded">
+						<xs:element name="date" type="_comments_date_constraints_query_request" />
+						<xs:element name="rate" type="_comment_rate_constraint_query_request" />
+						<xs:element name="client_order_comment_id" type="uuid" />
+						<xs:element name="order_fnac_id" type="xs:string" />
+					</xs:choice>
+				</xs:sequence>
+				<xs:attribute name="results_count" type="xs:positiveInteger" use="optional" default="100" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="_comments_date_constraints_query_request">
+		<xs:sequence>
+			<xs:element name="min" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+			<xs:element name="max" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+		<xs:attribute name="type" type="offer_state_constraint" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="_comment_rate_constraint_query_request">
+		<xs:attribute name="mode" type="offer_quantity_constraint" default="Equals" />
+		<xs:attribute name="value" type="xs:nonNegativeInteger" default="0" />
+	</xs:complexType>
+
+	<!-- CLIENT ORDER COMMENT QUERY RESPONSE -->
+	<xs:complexType name="client_order_comments_query_response">
+		<xs:complexContent>
+			<xs:extension base="base_response">
+				<xs:sequence>
+					<xs:element name="error" type="error" minOccurs="0" maxOccurs="unbounded" />
+					<xs:element name="page" type="xs:int" minOccurs="0" maxOccurs="1" />
+					<xs:element name="total_paging" type="xs:int" minOccurs="0" maxOccurs="1" />
+                                        <xs:element name="nb_total_per_page" type="xs:int" minOccurs="0" maxOccurs="1" />
+					<xs:element name="nb_total_result" type="xs:int" minOccurs="0" maxOccurs="1" />
+					<xs:element name="client_order_comment" type="_client_order_comment_query_response" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="_client_order_comment_query_response">
+		<xs:sequence>
+			<xs:element name="rate" type="xs:integer" minOccurs="1" maxOccurs="1" />
+			<xs:element name="order_fnac_id" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="client_order_comment_id" type="uuid" minOccurs="1" maxOccurs="1" />
+			<xs:element name="client_name" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="comment" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="reply" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="is_received" type="xs:boolean" minOccurs="1" maxOccurs="1" />
+			<xs:element name="is_fast" type="xs:boolean" minOccurs="1" maxOccurs="1" />
+			<xs:element name="is_well_packed" type="xs:boolean" minOccurs="1" maxOccurs="1" />
+			<xs:element name="is_good_shape" type="xs:boolean" minOccurs="1" maxOccurs="1" />
+			<xs:element name="created_at" type="xs:dateTime" minOccurs="1" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+<!-- SERVICES (for requests and responses) -->
+	<xs:element name="client_order_comments_query" type="client_order_comments_query_request" />
+	<xs:element name="client_order_comments_query_response" type="client_order_comments_query_response" />
+
+</xs:schema>

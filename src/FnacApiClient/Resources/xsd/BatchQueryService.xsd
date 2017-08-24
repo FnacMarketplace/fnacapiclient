@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://www.fnac.com/schemas/mp-dialog.xsd" elementFormDefault="qualified" xmlns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:mstns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include schemaLocation="base.xsd"/>
+
+<!-- OFFER BATCH QUERY SERVICE -->
+
+  <!-- OFFER BATCH QUERY REQUEST -->
+  <xs:complexType name="batch_query_request">
+    <xs:complexContent>
+      <xs:extension base="base_request">
+        <xs:sequence>
+          <xs:choice minOccurs="0" maxOccurs="1">
+            <xs:element name="date" type="_batch_date_constraint_query_request" />
+          </xs:choice>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="_batch_date_constraint_query_request">
+    <xs:all>
+      <xs:element name="min" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+      <xs:element name="max" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+    </xs:all>
+    <xs:attribute name="type" type="batch_state_constraint" use="required" />
+  </xs:complexType>
+
+  <!-- OFFER BATCH QUERY RESPONSE -->
+  <xs:complexType name="batch_query_response">
+    <xs:complexContent>
+      <xs:extension base="base_response">
+        <xs:sequence>
+          <xs:element name="error" type="error" minOccurs="0" maxOccurs="unbounded" />
+          <xs:element name="batch" type="_batch_query_response" minOccurs="0" maxOccurs="unbounded" />
+          <xs:element name="nb_batch_running" type="xs:int" minOccurs="1" maxOccurs="1" />
+          <xs:element name="nb_batch_active" type="xs:int" minOccurs="1" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="_batch_query_response">
+    <xs:sequence>
+      <xs:element name="batch_id" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="nb_lines" type="nullNonNegativeInteger" minOccurs="0" maxOccurs="1" />
+      <xs:element name="created_at" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="status" type="status_code" use="required" />
+  </xs:complexType>
+
+<!-- SERVICES (for requests and responses) -->
+  <xs:element name="batch_query" type="batch_query_request" />
+  <xs:element name="batch_query_response" type="batch_query_response" />
+
+</xs:schema>

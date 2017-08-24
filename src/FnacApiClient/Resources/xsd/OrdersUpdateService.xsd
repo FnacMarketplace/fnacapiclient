@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://www.fnac.com/schemas/mp-dialog.xsd" elementFormDefault="qualified" xmlns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:mstns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:include schemaLocation="base.xsd"/>
+
+
+<!-- ORDER UPDATE SERVICE -->
+
+	<!-- ORDER UPDATE REQUEST -->
+	<xs:complexType name="orders_update_request">
+		<xs:complexContent>
+			<xs:extension base="base_request">
+				<xs:sequence>
+					<xs:element name="order" type="_order_update_request" minOccurs="1" maxOccurs="unbounded" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="_order_update_request">
+		<xs:sequence>
+			<xs:element name="order_detail" type="_order_detail_update_request" minOccurs="1" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="order_id" type="order_id_restriction" use="required" />
+		<xs:attribute name="action" type="order_update_action" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="_order_detail_update_request">
+		<xs:all>
+			<xs:element name="order_detail_id" type="xs:positiveInteger" minOccurs="0" maxOccurs="1" />
+			<xs:element name="action" type="order_detail_state_update" minOccurs="1" maxOccurs="1" />
+			<xs:element name="tracking_number" type="string32" minOccurs="0" maxOccurs="1" />
+			<xs:element name="tracking_company" type="string100" minOccurs="0" maxOccurs="1" />
+			<xs:element name="tracking_client_id" type="string100" minOccurs="0" maxOccurs="1" />
+			<xs:element name="refund_reason" type="refund_reason" minOccurs="0" maxOccurs="1" />
+		</xs:all>
+	</xs:complexType>
+
+	<!-- ORDER UPDATE RESPONSE -->
+	<xs:complexType name="orders_update_response">
+		<xs:complexContent>
+			<xs:extension base="base_response">
+				<xs:sequence>
+					<xs:element name="error" type="error" minOccurs="0" maxOccurs="unbounded" />
+					<xs:element name="order" type="_order_update_response" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="_order_update_response">
+		<xs:sequence>
+			<xs:element name="status" type="status_code" minOccurs="1" maxOccurs="1" />
+			<xs:element name="order_id" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="state" type="order_state" minOccurs="0" maxOccurs="1" />
+			<xs:element name="error" type="error" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="order_detail" type="_order_detail_update_response" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="_order_detail_update_response">
+		<xs:sequence>
+			<xs:element name="order_detail_id" type="xs:positiveInteger" minOccurs="1" maxOccurs="1" />
+			<xs:element name="status" type="status_code" minOccurs="1" maxOccurs="1" />
+			<xs:element name="state" type="order_detail_state" minOccurs="0" maxOccurs="1" />
+			<xs:element name="error" type="error" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+<!-- SERVICES (for requests and responses) -->
+	<xs:element name="orders_update" type="orders_update_request" />
+	<xs:element name="orders_update_response" type="orders_update_response" />
+
+</xs:schema>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://www.fnac.com/schemas/mp-dialog.xsd" elementFormDefault="qualified" xmlns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:mstns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:include schemaLocation="base.xsd"/>
+
+<!-- SERVICES (for requests and responses) -->
+	<xs:element name="client_order_comments_update" type="_client_order_comments_update_request" />
+	<xs:element name="client_order_comments_update_response" type="_client_order_comments_update_response" />
+
+<!-- CLIENT ORDER COMMENT UPDATE SERVICE -->
+
+	<!-- CLIENT ORDER COMMENT UPDATE REQUEST -->
+	<xs:complexType name="_client_order_comments_update_request">
+		<xs:complexContent>
+			<xs:extension base="base_request">
+				<xs:sequence>
+					<xs:element name="comment" type="_client_order_comment_update_request" minOccurs="1" maxOccurs="unbounded" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="_client_order_comment_update_request">
+		<xs:sequence>
+			<xs:element name="comment_reply" type="string255" minOccurs="1" maxOccurs="1" />
+		</xs:sequence>
+		<xs:attribute name="id" type="uuid" use="required" />
+	</xs:complexType>
+
+	<!-- CLIENT ORDER COMMENT UPDATE RESPONSE -->
+	<xs:complexType name="_client_order_comments_update_response">
+		<xs:complexContent>
+			<xs:extension base="base_response">
+				<xs:sequence>
+					<xs:element name="error" type="error" minOccurs="0" maxOccurs="unbounded" />
+					<xs:element name="comment" type="_client_order_comment_update_response" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="_client_order_comment_update_response">
+		<xs:sequence>
+			<xs:element name="error" type="error" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="status" type="status_code" use="required"/>
+		<xs:attribute name="id" type="xs:string" use="required"/>
+	</xs:complexType>
+
+</xs:schema>

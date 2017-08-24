@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://www.fnac.com/schemas/mp-dialog.xsd" elementFormDefault="qualified" xmlns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:mstns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include schemaLocation="base.xsd"/>
+
+
+  <!-- OFFER BATCH STATUS SERVICE -->
+
+  <!-- OFFER BATCH STATUS REQUEST -->
+  <xs:complexType name="offer_batch_status_request">
+    <xs:complexContent>
+      <xs:extension base="base_request">
+        <xs:sequence>
+          <xs:element name="batch_id" type="xs:string" minOccurs="1" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+
+  <!-- OFFER BATCH STATUS RESPONSE -->
+  <xs:complexType name="offer_batch_status_response">
+    <xs:complexContent>
+      <xs:extension base="base_response">
+        <xs:sequence>
+          <xs:element name="batch_id" type="xs:string" minOccurs="0" maxOccurs="1" />
+          <xs:element name="error" type="error" minOccurs="0" maxOccurs="unbounded" />
+          <xs:element name="offer" type="_offer_status_response" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="_offer_status_response">
+    <xs:sequence>
+      <xs:element name="product_fnac_id" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="offer_fnac_id" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="offer_seller_id" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="error" type="error" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="status" type="status_code" use="required" />
+  </xs:complexType>
+
+  <!-- SERVICES (for requests and responses) -->
+  <xs:element name="batch_status" type="offer_batch_status_request" />
+  <xs:element name="batch_status_response" type="offer_batch_status_response" />
+
+</xs:schema>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://www.fnac.com/schemas/mp-dialog.xsd" elementFormDefault="qualified" xmlns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:mstns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:include schemaLocation="base.xsd"/>
+
+  <!-- ORDER QUERY REQUEST -->
+  <xs:complexType name="orders_query_request">
+    <xs:complexContent>
+      <xs:extension base="base_request">
+        <xs:sequence>
+          <xs:element name="paging" type="xs:int" minOccurs="0" maxOccurs="1" />
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="date" type="_orders_date_constraints_query_request" />
+            <xs:element name="state" type="order_state" />
+            <xs:element name="states" type="order_states" minOccurs="0" />
+            <xs:element name="sort_by" type="order_sort_constraint_type" minOccurs="0" />
+            <xs:element name="product_fnac_id" type="xs:string" />
+            <xs:element name="order_fnac_id" type="order_id_restriction" />
+            <xs:element name="orders_fnac_id" type="orders_fnac_id_type" minOccurs="0" />
+            <xs:element name="offer_fnac_id" type="xs:string" />
+            <xs:element name="offer_seller_id" type="xs:string" />
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="results_count" type="xs:positiveInteger" use="optional" default="100" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <!-- constraint order date sort -->
+  <xs:simpleType name="order_sort_constraint_type">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Presents the sort constraint type of order]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="DESC">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[descending sort]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ASC">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[ascending sort]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="order_states">
+    <xs:sequence>
+      <xs:element name="state" type="order_state" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="orders_fnac_id_type">
+    <xs:sequence>
+      <xs:element name="order_fnac_id" type="order_id_restriction" minOccurs="0" maxOccurs="50" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="_orders_date_constraints_query_request">
+    <xs:sequence>
+      <xs:element name="min" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+      <xs:element name="max" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="type" type="order_state_constraint" use="required" />
+  </xs:complexType>
+
+  <!-- ORDER QUERY RESPONSE -->
+  <xs:complexType name="orders_query_response">
+    <xs:complexContent>
+      <xs:extension base="base_response">
+        <xs:sequence>
+          <xs:element name="error" type="error" minOccurs="0" maxOccurs="unbounded" />
+          <xs:element name="page" type="xs:int" minOccurs="0" maxOccurs="1" />
+          <xs:element name="total_paging" type="xs:int" minOccurs="0" maxOccurs="1" />
+          <xs:element name="nb_total_per_page" type="xs:int" minOccurs="0" maxOccurs="1" />
+          <xs:element name="nb_total_result" type="xs:int" minOccurs="0" maxOccurs="1" />
+          <xs:element name="order" type="_order_query_response" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="_order_query_response">
+    <xs:sequence>
+      <xs:element name="shop_id" type="uuid" minOccurs="1" maxOccurs="1" />
+      <xs:element name="client_id" type="uuid" minOccurs="1" maxOccurs="1" />
+      <xs:element name="client_firstname" type="string100" minOccurs="1" maxOccurs="1" />
+      <xs:element name="client_lastname" type="string100" minOccurs="1" maxOccurs="1" />
+      <xs:element name="client_email" type="string100" minOccurs="0" maxOccurs="1" />
+      <xs:element name="adherent_number" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="order_id" type="xs:string" minOccurs="1" maxOccurs="1" />
+      <xs:element name="client_culture" type="string5" minOccurs="0" maxOccurs="1" />
+      <xs:element name="state" type="order_state" minOccurs="1" maxOccurs="1" />
+      <xs:element name="created_at" type="xs:dateTime" minOccurs="1" maxOccurs="1" />
+      <xs:element name="fees" type="xs:decimal" minOccurs="0" maxOccurs="1" />
+      <xs:element name="invoice_number_reference" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="vat_rate" type="xs:decimal" minOccurs="0" maxOccurs="1" />
+      <xs:element name="nb_messages" type="xs:nonNegativeInteger" minOccurs="0" maxOccurs="1" />
+      <xs:element name="delivery_note" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="shipping_address" type="address" minOccurs="0" maxOccurs="1" />
+      <xs:element name="billing_address" type="address" minOccurs="0" maxOccurs="1" />
+      <xs:element name="order_detail" type="_order_detail_query_response" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="_order_detail_query_response">
+    <xs:all>
+      <xs:element name="order_detail_id" type="xs:positiveInteger" minOccurs="1" maxOccurs="1" />
+      <xs:element name="state" type="order_detail_state" minOccurs="1" maxOccurs="1" />
+      <xs:element name="product_fnac_id" type="xs:string" minOccurs="1" maxOccurs="1" />
+      <xs:element name="product_name" type="xs:string" minOccurs="1" maxOccurs="1" />
+      <xs:element name="offer_fnac_id" type="xs:string" minOccurs="1" maxOccurs="1" />
+      <xs:element name="offer_seller_id" type="xs:string" minOccurs="1" maxOccurs="1" />
+      <xs:element name="price" type="xs:decimal" minOccurs="1" maxOccurs="1" />
+      <xs:element name="fees" type="xs:decimal" minOccurs="1" maxOccurs="1" />
+      <xs:element name="product_state" type="product_state" minOccurs="1" maxOccurs="1" />
+      <xs:element name="quantity" type="xs:nonNegativeInteger" minOccurs="1" maxOccurs="1" />
+      <xs:element name="description" type="string255" minOccurs="0" maxOccurs="1" />
+      <xs:element name="internal_comment" type="string255" minOccurs="0" maxOccurs="1" />
+      <xs:element name="debited_at" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+      <xs:element name="created_at" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+      <xs:element name="received_at" type="nullDateTime" minOccurs="0" maxOccurs="1" />
+      <xs:element name="refused_at" type="nullDateTime" minOccurs="0" maxOccurs="1" />
+      <xs:element name="product_url" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="image" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="tracking_number" type="string32" minOccurs="0" maxOccurs="1" />
+      <xs:element name="xeett" type="string100" minOccurs="0" maxOccurs="1" />
+      <xs:element name="pseudorvc" type="string100" minOccurs="0" maxOccurs="1" />
+      <xs:element name="tracking_client_id" type="string100" minOccurs="0" maxOccurs="1" />
+      <!-- shipping price for every order detail -->
+      <xs:element name="shipping_price" type="xs:decimal" minOccurs="0" maxOccurs="1" />
+      <xs:element name="shipping_method" type="shipping_method" minOccurs="0" maxOccurs="1" />
+      <!-- promotion data -->
+      <xs:element name="promotion_type" type="xs:integer" minOccurs="0" maxOccurs="1" />
+      <xs:element name="promotion_uid" type="xs:string" minOccurs="0" maxOccurs="1" />
+    </xs:all>
+  </xs:complexType>
+
+
+  <!-- SERVICES (for requests and responses) -->
+  <xs:element name="orders_query" type="orders_query_request" />
+  <xs:element name="orders_query_response" type="orders_query_response" />
+
+</xs:schema>

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema
+    targetNamespace="http://www.fnac.com/schemas/mp-dialog.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://www.fnac.com/schemas/mp-dialog.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:include schemaLocation="base.xsd"/>
+
+    <!-- PRICING V3 AUTHENTICATION REQUEST -->
+    <xs:element name="pricing_query">
+        <xs:complexType>
+            <xs:annotation>
+                <xs:documentation>
+                    <![CDATA[Define the pricing_query request that asks the front webservice for pricing details on one or several products.]]>
+                </xs:documentation>
+            </xs:annotation>
+            <xs:sequence>
+                <xs:element name="product_reference" maxOccurs="200">
+                    <xs:annotation>
+                        <xs:documentation>
+                            <![CDATA[product_reference value for the type attribute value (Ean, PartnerId, etc)]]>
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                                <xs:attribute name="type" type="commercial_product_reference_type" use="required"/>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="shop_id" type="xs:string" use="required"/>
+            <xs:attribute name="partner_id" type="xs:string" use="required"/>
+            <xs:attribute name="token" type="xs:string" use="required"/>
+            <xs:attribute name="sellers" type="seller_filter" use="optional"/>
+            <xs:attribute name="states" type="state_filter" use="optional"/>
+            <xs:attribute name="prices" type="price_filter" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:simpleType name="seller_filter">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="all"/>
+            <xs:enumeration value="all-pro"/>
+            <xs:enumeration value="others"/>
+            <xs:enumeration value="others-pro"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="state_filter">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="all"/>
+            <xs:enumeration value="new"/>
+            <xs:enumeration value="refurbished"/>
+            <xs:enumeration value="used-as-new"/>
+            <xs:enumeration value="used-very-good"/>
+            <xs:enumeration value="used-good"/>
+            <xs:enumeration value="used-correct"/>
+            <xs:enumeration value="collection-as-new"/>
+            <xs:enumeration value="collection-very-good"/>
+            <xs:enumeration value="collection-good"/>
+            <xs:enumeration value="collection-correct"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="price_filter">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="all"/>
+            <xs:enumeration value="standard"/>
+            <xs:enumeration value="adherent"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <!-- Prices Query Response -->
+    <xs:element name="pricing_query_response">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="base_response">
+                    <xs:sequence>
+                        <xs:element name="pricing_products" type="_prices_products" minOccurs="0" maxOccurs="1" />
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>    
+        
+  
+    <xs:complexType name="_prices_products">
+        <xs:sequence>
+            <xs:element name="pricing_product" type="_prices_product" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+  
+    <xs:complexType name="_prices_product">
+        <xs:all>
+            <xs:element name="product_reference" type="commercial_product_reference" minOccurs="1" maxOccurs="1" />
+            <xs:element name="product_name" type="string255" minOccurs="1" maxOccurs="1" />
+            <xs:element name="product_url" type="xs:string" minOccurs="0" maxOccurs="1" />
+            <xs:element name="product_ean" type="xs:string" minOccurs="0" maxOccurs="1" />
+            <xs:element name="standard" type="_standard_prices" minOccurs="0" maxOccurs="1" />
+            <xs:element name="adherent" type="_adherent_prices" minOccurs="0" maxOccurs="1" />
+        </xs:all>
+    </xs:complexType>
+  
+  
+    <xs:complexType name="_standard_prices">
+      <xs:sequence>
+        <xs:element name="seller_offer" type="_seller_offer" minOccurs="0" maxOccurs="1" />
+        <xs:element name="ranked_offers" type="_ranked_offers" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  
+    
+    
+    <xs:complexType name="_adherent_prices">
+      <xs:sequence>
+        <xs:element name="seller_offer" type="_seller_offer" minOccurs="0" maxOccurs="1" />
+        <xs:element name="ranked_offers" type="_ranked_offers" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>    
+    
+    <xs:complexType name="_seller_offer">
+        <xs:all>
+            <xs:element name="uid" type="xs:string" minOccurs="0" maxOccurs="1" />
+            <xs:element name="offer_status" type="product_state" minOccurs="0" maxOccurs="1" />
+            <xs:element name="price" type="price_090_20000" minOccurs="0" maxOccurs="1" />
+            <xs:element name="shipping_price" type="xs:decimal" minOccurs="0" maxOccurs="1" />
+            <xs:element name="updated_at" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+            <xs:element name="stock" type="xs:nonNegativeInteger" minOccurs="0" maxOccurs="1" />
+        </xs:all>
+    </xs:complexType>    
+     
+    <xs:complexType name="_ranked_offers">
+        <xs:all>
+            <xs:element name="seller_name" type="xs:string" minOccurs="0" maxOccurs="1" />
+            <xs:element name="seller_url" type="xs:string" minOccurs="0" maxOccurs="1" />
+            <xs:element name="seller_sales_number" type="xs:nonNegativeInteger" minOccurs="0" maxOccurs="1" />
+            <xs:element name="seller_reliability_rate" type="xs:decimal" minOccurs="0" maxOccurs="1" />
+            <xs:element name="has_buybox" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+            <xs:element name="offer_status" type="product_state" minOccurs="0" maxOccurs="1" />
+            <xs:element name="position" type="xs:nonNegativeInteger" minOccurs="0" maxOccurs="1" />
+            <xs:element name="price" type="price_090_20000" minOccurs="0" maxOccurs="1" />
+            <xs:element name="shipping_price" type="xs:decimal" minOccurs="0" maxOccurs="1" />
+            <xs:element name="updated_at" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+        </xs:all>
+        <xs:attribute name="type" type="_ranked_offers_type" />
+    </xs:complexType>
+    
+    
+    <xs:simpleType name="_ranked_offers_type">
+        <xs:annotation>
+            <xs:documentation>
+            <![CDATA[Defines offer seller's type]]>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="professional">
+                <xs:annotation>
+                    <xs:documentation>
+                <![CDATA[Professional seller offer]]>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="non-professional">
+                <xs:annotation>
+                    <xs:documentation>
+                <![CDATA[Private seller offer]]>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="fnac">
+                <xs:annotation>
+                    <xs:documentation>
+                <![CDATA[Fnac Offer]]>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+       
+</xs:schema>

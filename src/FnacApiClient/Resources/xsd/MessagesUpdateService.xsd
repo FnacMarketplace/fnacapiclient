@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://www.fnac.com/schemas/mp-dialog.xsd" elementFormDefault="qualified" xmlns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:mstns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:include schemaLocation="base.xsd"/>
+
+	<!-- type message  -->
+	<xs:simpleType name="message_action">
+		<xs:annotation>
+			<xs:documentation>
+				<![CDATA[action authorized for message]]>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="mark_as_read">
+				<xs:annotation>
+					<xs:documentation>
+						<![CDATA[Mark the message as read]]>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="mark_as_unread">
+				<xs:annotation>
+					<xs:documentation>
+						<![CDATA[Mark the message as unread]]>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="archive">
+				<xs:annotation>
+					<xs:documentation>
+						<![CDATA[Mark the message as archived]]>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="mark_as_read_and_archive">
+				<xs:annotation>
+					<xs:documentation>
+						<![CDATA[Mark the message as read and as archive]]>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="unarchive">
+				<xs:annotation>
+					<xs:documentation>
+						<![CDATA[Mark the message as unarchive]]>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="reply">
+				<xs:annotation>
+					<xs:documentation>
+						<![CDATA[reply to the message]]>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="create">
+				<xs:annotation>
+					<xs:documentation>
+						<![CDATA[create a new message]]>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="confirm_shop_delivery">
+				<xs:annotation>
+					<xs:documentation>
+						<![CDATA[create order available in shop message. FnacShop shops only]]>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- type message  -->
+	<xs:simpleType name="message_to">
+		<xs:annotation>
+			<xs:documentation>
+				<![CDATA[Presents the differents receiver for the message]]>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CALLCENTER">
+				<xs:annotation>
+					<xs:documentation>
+						<![CDATA[Send a message to the callcenter. (allowed only if the order is in incident status)]]>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CLIENT">
+				<xs:annotation>
+					<xs:documentation>
+						<![CDATA[Send a message to the client.]]>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ALL">
+				<xs:annotation>
+					<xs:documentation>
+						<![CDATA[Send a message to the client and callcenter.]]>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- type message  -->
+	<xs:simpleType name="message_type">
+		<xs:annotation>
+			<xs:documentation>
+				<![CDATA[Presents the blalbla]]>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OFFER">
+				<xs:annotation>
+					<xs:documentation>
+						<![CDATA[Message associated with offer]]>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ORDER">
+				<xs:annotation>
+					<xs:documentation>
+						<![CDATA[Message associated with order]]>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- subject message  -->
+	<xs:simpleType name="message_subject">
+		<xs:annotation>
+			<xs:documentation>
+				<![CDATA[Presents the differents subjects available]]>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="product_information">
+				<xs:annotation>
+					<xs:documentation>
+						<![CDATA[Question subject about the product.]]>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="shipping_information">
+				<xs:annotation>
+					<xs:documentation>
+						<![CDATA[Question subject about the shipping.]]>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="order_information">
+				<xs:annotation>
+					<xs:documentation>
+						<![CDATA[Question subject about the order.]]>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="offer_problem">
+				<xs:annotation>
+					<xs:documentation>
+						<![CDATA[Question subject about problem with an offer.]]>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="offer_not_received">
+				<xs:annotation>
+					<xs:documentation>
+						<![CDATA[Question subject about not received the offer.]]>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="other_question">
+				<xs:annotation>
+					<xs:documentation>
+						<![CDATA[Message associated with order]]>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+
+<!-- SERVICES (for requests and responses) -->
+	<xs:element name="messages_update" type="messages_update_request" />
+	<xs:element name="messages_update_response" type="messages_update_response" />
+
+<!-- MESSAGE UPDATE SERVICE -->
+
+	<!-- MESSAGE UPDATE REQUEST -->
+	<xs:complexType name="messages_update_request">
+		<xs:complexContent>
+			<xs:extension base="base_request">
+				<xs:sequence>
+					<xs:element name="message" type="_messages_update_request" minOccurs="1" maxOccurs="unbounded" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="_messages_update_request">
+		<xs:all>
+			<xs:element name="message_to" type="message_to" minOccurs="0" maxOccurs="1" />
+			<xs:element name="message_subject" type="message_subject" minOccurs="0" maxOccurs="1" />
+			<xs:element name="message_description" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="message_type" type="message_type" minOccurs="0" maxOccurs="1" />
+		</xs:all>
+		<xs:attribute name="action" type="message_action" use="required" />
+		<xs:attribute name="id" type="xs:string" use="required" />
+	</xs:complexType>
+
+
+	<!-- MESSAGE UPDATE RESPONSE -->
+	<xs:complexType name="messages_update_response">
+		<xs:complexContent>
+			<xs:extension base="base_response">
+				<xs:sequence>
+					<xs:element name="error" type="error" minOccurs="0" maxOccurs="unbounded" />
+					<xs:element name="message" type="_messages_update_response" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="_messages_update_response">
+		<xs:sequence>
+			<xs:element name="error" type="error" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="status" type="status_code" use="required"/>
+		<xs:attribute name="id" type="xs:string"/>
+	</xs:complexType>
+
+</xs:schema>

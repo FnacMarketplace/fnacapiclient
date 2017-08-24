@@ -8,28 +8,23 @@ Fnac.com offers a REST API take control over your account and this library can h
 
 Make sure your PHP version is at least 5.3.2, and that you have php5-xsl mod installed.
 
-Say your project is installed in
-```shell
-/var/www/my_project
-```
-
-and your public directory is
-```shell
-/var/www/public_html
-```
-
-Then simply clone the project into a private directory:
+Simply clone the project into a private directory:
 
 ```shell
-cd /var/www/lib/vendor/FnacMarketplaceApiClient
 git clone https://github.com/FnacMarketplace/fnacapiclient.git
+```
+
+And launch the installation
+
+```shell
+composer install
 ```
 
 Or download and extract the archive in that directory (https://marketplace.ws.fd-recette.net/docs/api/2.6/download/fnacapiclient.tgz)
 
 ## Configuration
 
-Finally, edit the config.yml file, and fill it in with your seller account test or production ids given by Fnac teams.
+Edit the config.yml file, and fill it in with your seller account test or production ids given by Fnac teams.
 
 ```shell
 vi config/config.yml
@@ -47,6 +42,8 @@ The Fnac Marketplace PHP Client offers methods to call the available services su
 * Exchange communications with customers about the offers or the orders
 * Manage claims on orders and eventually refund them
 * Retrieve the best prices among the competition
+
+This client is shipped with a graphical user interface. Once your ids properly added in the config.yml file, you can open it in your browser at http://yourhost.com/my_project/index.php
 
 ## Contributing
 

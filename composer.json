@@ -1,0 +1,14 @@
+{
+    "require": {
+        "zendframework/zend-http" : "2.0.*",
+        "zendframework/zend-uri" : "2.0.*",
+        "zendframework/zend-validator" : "2.0.*",
+        "monolog/monolog" : "1.*",
+        "symfony/finder" : "2.0.*",
+        "symfony/http-foundation": "2.3.*@dev",
+        "symfony/serializer": "2.0.*",
+        "symfony/yaml" : "2.0.*",
+        "twbs/bootstrap": "^3.3",
+        "components/jquery": "^2.2"
+    }
+}

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://www.fnac.com/schemas/mp-dialog.xsd" elementFormDefault="qualified" xmlns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:mstns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:include schemaLocation="base.xsd"/>
+
+<!-- AUTHENTICATION SERVICE -->
+
+  <!-- AUTHENTICATION REQUEST -->
+  <xs:complexType name="authentication_request">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Define the authentication request. Each partner will be provided a unique partner_id, a unique shop_id and a unique key. The association (partner_id, shop_id, key) allows the partner to authenticate on the marketplace's API.]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:all>
+      <xs:element name="partner_id" type="uuid" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Fnac partner unique id]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="shop_id" type="uuid" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Fnac shop unique id]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="key" type="xs:string" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Partner authentication key (string)]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:all>
+  </xs:complexType>
+
+  <!-- AUTHENTICATION RESPONSE -->
+  <xs:complexType name="authentication_response">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Define the authentication response.]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="base_response">
+        <xs:sequence>
+          <xs:element name="token" type="uuid" minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[token will remain valid during the session]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="validity" type="xs:dateTime" minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[validity date when the session will expired]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+		      <xs:element name="version" type="xs:string" minOccurs="0" maxOccurs="1">
+		        <xs:annotation>
+		          <xs:documentation>
+		            <![CDATA[API version (string)]]>
+		          </xs:documentation>
+		        </xs:annotation>
+		      </xs:element>
+          <xs:element name="error" type="error" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[authentication error]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <!-- SERVICES (for requests and responses) -->
+  <xs:element name="auth" type="authentication_request" />
+  <xs:element name="auth_response" type="authentication_response" />
+</xs:schema>

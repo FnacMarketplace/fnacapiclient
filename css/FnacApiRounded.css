@@ -1,0 +1,800 @@
+/*
+    Document   : FnacApiRounded.css
+    Created on : September 2013
+    Author     : Armelle LUTZ
+    Description:
+        Fnac API Client GUI stylesheet
+*/
+
+
+/* http://meyerweb.com/eric/tools/css/reset/
+    v2.0 | 20110126
+    License: none (public domain)
+ */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/*********************************/
+
+html {
+    height: 99%;
+    font-size: 100%;
+}
+body {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-bottom: 2em;
+    font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans serif;
+    font-size: 90%;
+    min-height: 100%;
+    position: relative;
+}
+
+header {
+    padding: 0.5em;
+    background-color: #3456a7;
+    color: #FFF;
+}
+    header h1 {
+        padding: 1em 1em 0 1em;
+        text-align: right;
+        font-size: 1.1em;
+        font-weight: bold;
+        text-shadow: 0 0 2px #bbb;
+    }
+
+footer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 0.5em 2em;
+    text-align: right;
+    font-size: 0.8em;
+    background-color: #fff;
+    color: #999;
+}
+
+h3 {
+    margin: 1em 0;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+}
+
+hr.clear {
+    clear: both;
+    visibility: hidden;
+}
+
+/* Navigation menu */
+nav {
+    padding: 0 15%;
+    background-color: #3456a7;
+    font-size: 1.2em;
+}
+    nav li {
+        display: inline-block;
+        padding: 0.8em 1em;
+        background-color: #fff;
+        border-radius: 10px 5px 0 0;
+        border: 2px solid #999;
+        border-bottom: 1px solid #3456a7;
+        color: #3456a7;
+    }
+    nav li.active {
+        border-bottom-color: #fff;
+    }
+    nav a {
+        color: #3456a7;
+        text-transform: capitalize;
+        font-weight: bold;
+        text-decoration: none;
+    }
+    nav a:hover, nav a:focus {
+        color: #000;
+    }
+
+/* Submenus */
+ul.subnav {
+    margin: 1em 15%;
+    list-style-type: none;
+}
+    ul.subnav li {
+        display: inline-block;
+        padding: 0.5em 2em;
+        color: #fff;
+        border-radius: 8px;
+        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
+        background: #3456a7;
+        background: -webkit-linear-gradient(#3456a7, #789aeb);
+        background: -moz-linear-gradient(#3456a7, #789aeb);
+        background: -ms-linear-gradient(#3456a7, #789aeb);
+        background: -o-linear-gradient(#3456a7, #789aeb);
+        background: linear-gradient(#3456a7, #789aeb);
+    }
+    ul.subnav li.active {
+        /*box-shadow: 1px 1px 10px black inset, 0 1px 0 rgba( 255, 255, 255, 0.4);*/
+        opacity: 0.8;
+    }
+    ul.subnav a {
+        color: #fff;
+        text-decoration: none;
+    }
+    ul.subnav a:hover, ul.subnav a:focus {
+        text-decoration: underline;
+    }
+
+
+/* Homepage component */
+
+#dashboard {
+    margin: 0 15%;
+}
+#dashboard #connect {
+    font-size: 0.9em;
+    float: right;
+}
+
+#dashboard #connect_status, #dashboard #params {
+    margin: 1em;
+    padding: 1em;
+    width: 400px;
+    border-radius: 1em;
+    box-shadow: 4px 4px 3px #888;
+}
+#dashboard #params {
+    background-color: #eee;
+    color: #000;
+}
+#dashboard #params th {
+    width: 25%;
+    text-align: left;
+    font-weight: bold;
+}
+#dashboard #params td {
+    padding: 0.5em 0;
+}
+
+#connect_status p {
+    color: #fff;
+    font-size: 2em;
+    text-align: right;
+}
+.OK {
+    background-color: #390;
+}
+
+.NOK {
+    background-color: #c00;
+}
+
+#dashboard h2 {
+    padding: 0 0 10px 0;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+#dashboard .infobox {
+    float: left;
+    margin: 1em 1em 1em 0;
+    padding: 1em;
+    height: 100px;
+    min-width: 100px;
+    background-color: #eee;
+    border: solid thin #3456a7;
+    border-right-width: 10px;
+    border-radius: 1em;
+    box-shadow: 4px 4px 3px #888;
+    position: relative;
+}
+    #dashboard #opened_incidents {
+        clear: left;
+    }
+
+    .infobox h2 {
+        color: #666;
+    }
+
+    .infobox p {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        color: #3456a7;
+        font-size: 2em;
+    }
+
+#dashboard #auth_error, div.no_orders {
+    margin: 1em;
+    padding: 1em;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+div.no_orders {
+    margin: 1em 15%;
+}
+
+
+/* Offers, orders and batches components */
+
+#paging, #pager {
+    padding: 0.5em;
+    width: 90%;
+    background-color: #3456a7;
+    text-align: center;
+    font-size: 1em;
+    color: #fff;
+    font-weight: bold;
+}
+#paging {
+    margin: 1em auto 0;
+    border-radius: 9px 9px 0 0;
+}
+#pager {
+    margin: 0 auto;
+    margin-bottom: 2em;
+    border-radius: 0 0 9px 9px;
+}
+    #pager span {
+        padding: 0.5em;
+        display: inline-block;
+        min-width: 1em;
+    }
+        #pager span.current_page {
+            background-color: #fff;
+            color: #3456a7;
+            border-radius: 1em;
+        }
+    #pager a {
+        display: block;
+        color: #fff;
+        text-decoration: none;
+    }
+        #pager a:focus, #pager a:hover {
+            text-decoration: underline;
+        }
+
+#data {
+    background: #efefef;
+    margin: 0 auto;
+    padding: 0.5em;
+    width: 90%;
+}
+    #data td > a {
+        color: #333;
+        font-weight: bold;
+    }
+    #data th {
+        font-weight: bold;
+        color: #444;
+        text-align: left;
+    }
+    #data th.small {
+        width: 10%;
+    }
+
+    #data th, #data td {
+        padding: 1em;
+        vertical-align: middle;
+    }
+
+    #data tr {
+        border-bottom: solid thin #ccc;
+        font-size: 1em;
+    }
+        #data tr:hover {
+            background: #fff;
+        }
+
+    #offers_query_table td a.product_link {
+        text-decoration: none;
+    }
+        #offers_query_table td a.product_link:hover, #offers_query_table td a.product_link:focus {
+            text-decoration: underline;
+        }
+
+    #offers_query_table td img {
+        height: 80px;
+    }
+
+    #data button {
+        border: none;
+        padding: 5px;
+        font-weight: bold;
+        text-decoration: none;
+        color: #fff;
+        border-radius: 8px;
+        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
+        background: #3456a7;
+        background: -webkit-linear-gradient(#3456a7, #789aeb);
+        background: -moz-linear-gradient(#3456a7, #789aeb);
+        background: -ms-linear-gradient(#3456a7, #789aeb);
+        background: -o-linear-gradient(#3456a7, #789aeb);
+        background: linear-gradient(#3456a7, #789aeb);
+    }
+        #data button:hover, #data button:focus {
+            opacity: 0.8;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        #data button:active {
+            box-shadow: 1px 1px 10px black inset, 0 1px 0 rgba( 255, 255, 255, 0.4);
+        }
+    #data button.delete_button {
+        background: #FF5F5F;
+        background: -webkit-linear-gradient(#FF5F5F, #bb1b1b);
+        background: -moz-linear-gradient(#FF5F5F, #bb1b1b);
+        background: -ms-linear-gradient(#FF5F5F, #bb1b1b);
+        background: -o-linear-gradient(#FF5F5F, #bb1b1b);
+        background: linear-gradient(#FF5F5F, #bb1b1b);
+    }
+
+#confirm_response {
+    text-align: center;
+    margin: 1em 0;
+    color: #3456a7;
+}
+#confirm_response a {
+    color: #000;
+}
+
+/* Orders details */
+
+.detailed_order {
+    display: none;
+    background: #fff;
+    border: solid thin #666;
+    width: 630px;
+    padding: 1em 2em;
+}
+
+    .detailed_order_button:hover, .detailed_order_button:focus {
+        cursor: pointer;
+        text-decoration: underline;
+    }
+    .detailed_order h2 {
+        font-size: 1.3em;
+        border-bottom: solid thin #ccc;
+        padding-bottom: 1em;
+    }
+
+    .order_detail {
+        display: table;
+        margin: 1em 0;
+        width: 100%;
+    }
+        .order_detail_col1, .order_detail_col2, .order_detail_col3, .order_detail_col4 {
+            display: table-cell;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        .order_detail_col1 {
+            width: 5%;
+            font-size: 1.4em;
+            padding-right: 0.25em;
+        }
+        .order_detail_col2 {
+            width: 45%;
+            padding-right: 15px;
+        }
+        .order_detail_col3 {
+            width: 30%;
+            border-left: solid thin #ccc;
+            padding: 0 15px;
+        }
+        .order_detail_col4 {
+            font-size: 1.4em;
+            padding-left: 15px;
+            text-align: right;
+            border-left: solid thin #ccc;
+        }
+
+        .main_info {
+            font-size: 1.2em;
+            padding-bottom: 0.25em;
+        }
+        .side_info {
+            font-size: 0.9em;
+            padding-bottom: 0.25em;
+            color: #666;
+            font-style: italic;
+        }
+        .status {
+            font-style: normal;
+            font-weight: bold;
+        }
+
+    .addresses {
+        display: table;
+        margin: 1em 0;
+        border-top: solid thin #ccc;
+    }
+    .billing_address, .shipping_address {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        display: table-cell;
+        padding-left: 5%;
+        width: 50%;
+        line-height: 1.2em;
+    }
+        .billing_address h3, .shipping_address h3 {
+            text-align: left;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+    .close_button {
+        cursor: pointer;
+        float: right;
+    }
+
+    .order_total_amount {
+        margin: 0;
+        border-top: solid thin #ccc;
+        text-align: right;
+        padding-top: 0.7em;
+        font-size: 1.4em;
+    }
+    .order_detail_actions {
+        display: table;
+        width: 100%;
+        margin: 1em 0;
+        border-top: solid thin #ccc;
+    }
+        .order_detail_actions div {
+            display: table-cell;
+            padding-top: 1em;
+            text-align: center;
+            font-size: 1.4em;
+        }
+        .order_detail_actions a {
+            text-decoration: none;
+        }
+        .order_detail_actions a:hover, .order_detail_actions a:focus {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .accept a, .ship a {
+            color: #00A000;
+        }
+        .refuse a {
+            color: #900;
+        }
+
+#batch_query_table {
+    margin: 1em auto;
+    width: 800px;
+}
+
+/* batch status details */
+#batch {
+    margin: 1em 15%;
+    padding: 1em;
+    border-radius: 1em;
+    box-shadow: 4px 4px 3px #888;
+    background-color: #eee;
+    color: #000;
+}
+    #batch_status_data {
+        font-size: 0.9em;
+    }
+        #batch_status_data table {
+            width: 600px;
+            margin: 0 auto;
+        }
+        #batch_status_data .infos {
+            padding: 0.5em;
+            border: solid thick #EFEFEF;
+            background: #fff;
+            line-height: 1.3;
+        }
+            #batch_status_data .infos span.label {
+                display: inline-block;
+                font-weight: bold;
+                width: 25%;
+            }
+        #batch_status_data .status {
+            border: solid #efefef thick;
+            color: #fff;
+            text-align: center;
+            width: 65px;
+            font-weight: bold;
+            vertical-align: middle;
+        }
+        #batch_status_data .ok {
+            background: green;
+        }
+        #batch_status_data .error {
+            background: red;
+        }
+
+
+/* XML debug section */
+#debug_info_button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    cursor: pointer;
+    background: transparent url(../img/xml.png) no-repeat;
+    width: 50px;
+    height: 25px;
+}
+    #debug_info_button span {
+        position: absolute !important;
+        clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+        clip: rect(1px, 1px, 1px, 1px);
+        padding: 0 !important;
+        border: 0 !important;
+        height: 1px !important;
+        width: 1px !important;
+        overflow: hidden;
+    }
+#debug_info {
+    display: none;
+    position: absolute;
+    top: 40px;
+    left: 10px;
+    z-index: 100;
+    width: 30%;
+    padding: 2em 4em;
+    background: #ccc;
+    border: solid thin #666;
+    height: 85%;
+    overflow-y: auto;
+}
+    #debug_info h1 {
+        margin: 2em 0 1em 0;
+        padding: 0;
+        font-size: 1.2em;
+    }
+    #hideXML {
+        text-align: right;
+        cursor: pointer;
+    }
+    #debug_info code {
+        font: 0.8em monospace;
+        white-space: pre-wrap;
+    }
+        #debug_info code span.bracket {
+            color: #00f;
+        }
+        #debug_info code span.xmlbracket {
+            color: #800000;
+        }
+        #debug_info code span.tag {
+            color: #808000;
+        }
+        #debug_info code span.attr {
+            color: #800080;
+        }
+        #debug_info code span.value {
+            color: #f0f;
+        }
+
+
+/* Responsive */
+@media (max-width: 800px) {
+
+    /* fixer une largeur maximale  de 100 % aux éléments potentiellement problématiques */
+    img, table, td, blockquote, code, pre, textarea, input, iframe, object, embed, video {
+        max-width: 100%;
+    }
+    /* conserver le ratio des images et empêcher les débordements de boîtes dûs aux border ou padding */
+    img {
+        height: auto; width: auto;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    /* gestion des mots longs */
+    textarea, table, td, th, code, pre, samp {
+        word-wrap: break-word; /* passage à la ligne forcé */
+        -webkit-hyphens: auto; /* césure propre */
+        -moz-hyphens: auto;
+        hyphens: auto;
+    }
+
+    nav {
+        padding: 0;
+        font-size: 1em;
+        text-align: center;
+    }
+        nav li {
+            padding: 0.5em;
+            border: 2px solid #999;
+            border-bottom: none;
+        }
+    ul.subnav {
+        margin: 1em;
+        text-align: center;
+    }
+
+    #dashboard .infobox, #dashboard #connect, #dashboard #connect_status, #dashboard #params, #batch_query_table {
+        float: none;
+        width: auto;
+    }
+
+    #dashboard #connect_status, #dashboard #params, #dashboard .infobox {
+        margin: 1em 0;
+    }
+
+    #pager, #paging {
+        font-size: 0.8em;
+    }
+
+    #data {
+        font-size: 0.9em;
+    }
+        #data th.small {
+            width: auto;
+        }
+    #batch_status_data .infos span.label {
+        display: block;
+        width: auto;
+    }
+
+    #debug_info {
+        width: auto;
+    }
+
+    /* Hide secondary columns in tables to reduce width */
+    #incidents_query_table th:nth-child(3),
+    #incidents_query_table td:nth-child(3),
+    #incidents_query_table th:nth-child(5),
+    #incidents_query_table td:nth-child(5),
+    #incidents_query_table th:nth-child(6),
+    #incidents_query_table td:nth-child(6),
+
+    #batch_query_table th:nth-child(2),
+    #batch_query_table td:nth-child(2),
+    #batch_query_table th:nth-child(3),
+    #batch_query_table td:nth-child(3),
+    #batch_query_table th:nth-child(4),
+    #batch_query_table td:nth-child(4),
+
+    #orders_query_table th:nth-child(1),
+    #orders_query_table td:nth-child(1),
+    #orders_query_table th:nth-child(3),
+    #orders_query_table td:nth-child(3),
+    #orders_query_table th:nth-child(4),
+    #orders_query_table td:nth-child(4),
+    #orders_query_table th:nth-child(5),
+    #orders_query_table td:nth-child(5),
+
+    #offers_query_table th:nth-child(1),
+    #offers_query_table td:nth-child(1),
+    #offers_query_table th:nth-child(4),
+    #offers_query_table td:nth-child(4),
+    #offers_query_table th:nth-child(5),
+    #offers_query_table td:nth-child(5),
+    #offers_query_table th:nth-child(6),
+    #offers_query_table td:nth-child(6),
+    #offers_query_table th:nth-child(7),
+    #offers_query_table td:nth-child(7)
+    {
+        display: none;
+    }
+
+
+    .detailed_order {
+        display: block;
+        background: #fff;
+        border: solid thin #666;
+        width: auto;
+        padding: 1em;
+    }
+
+    .detailed_order_button {
+        display: none;
+    }
+    .detailed_order h2 {
+        font-size: 1.1em;
+    }
+
+    .order_detail {
+        display: block;
+        margin: 1em 0;
+        width: 100%;
+    }
+        .order_detail_col1, .order_detail_col3, .side_info, .close_button, .billing_address { display: none; }
+        .order_detail_col2, .order_detail_col4 {
+            display: block;
+            width: auto;
+            padding: 0;
+            border: none;
+        }
+
+        .main_info {
+            font-size: 1.2em;
+            padding-bottom: 0.25em;
+        }
+
+    .addresses {
+        display: block;
+        margin: 1em 0;
+        border-top: solid thin #ccc;
+    }
+    .shipping_address {
+        display: block;
+        padding-left: 0;
+        width: 100%;
+        line-height: 1.2em;
+    }
+
+    .order_total_amount {
+        margin: 0;
+        border-top: solid thin #ccc;
+        text-align: right;
+        padding-top: 0.7em;
+        font-size: 1.4em;
+    }
+    .order_detail_actions {
+        display: table;
+        width: 100%;
+        margin: 1em 0;
+        border-top: solid thin #ccc;
+    }
+        .order_detail_actions div {
+            display: table-cell;
+            padding-top: 1em;
+            text-align: center;
+            font-size: 1.4em;
+        }
+        .order_detail_actions a {
+            text-decoration: none;
+        }
+        .order_detail_actions a:hover, .order_detail_actions a:focus {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .accept a, .ship a {
+            color: #00A000;
+        }
+        .refuse a {
+            color: #900;
+        }
+}
+
+
+@media (max-device-width:768px) and (orientation: landscape) {
+  html {
+   -webkit-text-size-adjust: 100%;
+  }
+}

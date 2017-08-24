@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://www.fnac.com/schemas/mp-dialog.xsd" elementFormDefault="qualified" xmlns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:mstns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include schemaLocation="base.xsd"/>
+
+  <!-- PARTNER SHOPS QUERY SERVICE -->
+
+  <!-- PARTNER SHOPS QUERY REQUEST -->
+  <xs:complexType name="shop_invoices_query_request">
+    <xs:complexContent>
+      <xs:extension base="base_request">
+        <xs:sequence>
+          <xs:element name="paging" type="xs:int" minOccurs="0" maxOccurs="1" />
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="date" type="_shop_invoice_date_constraints_query_request" />
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="results_count" type="xs:positiveInteger" use="optional" default="100" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="_shop_invoice_date_constraints_query_request">
+    <xs:sequence>
+      <xs:element name="min" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+      <xs:element name="max" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- PARTNER SHOPS QUERY RESPONSE -->
+  <xs:complexType name="shop_invoices_query_response">
+    <xs:complexContent>
+      <xs:extension base="base_response">
+        <xs:sequence>
+          <xs:element name="error" type="error" minOccurs="0" maxOccurs="unbounded" />
+          <xs:element name="page" type="xs:int" minOccurs="0" maxOccurs="1" />
+          <xs:element name="total_paging" type="xs:int" minOccurs="0" maxOccurs="1" />
+          <xs:element name="nb_total_per_page" type="xs:int" minOccurs="0" maxOccurs="1" />
+          <xs:element name="nb_total_result" type="xs:int" minOccurs="0" maxOccurs="1" />
+          <xs:element name="shop_invoice" type="_shop_invoice_query_response" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="_shop_invoice_query_response">
+    <xs:sequence>
+      <xs:element name="invoice_id" type="uuid" minOccurs="1" maxOccurs="1" />
+      <xs:element name="url" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="report_url" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="created_at" type="xs:dateTime" minOccurs="1" maxOccurs="1" />
+      <xs:element name="transfer_amount" type="xs:decimal" minOccurs="1" maxOccurs="1" />
+      <xs:element name="tva" type="xs:decimal" minOccurs="1" maxOccurs="1" />
+      <xs:element name="order_amount" type="xs:decimal" minOccurs="1" maxOccurs="1" />
+      <xs:element name="shipping_amount" type="xs:decimal" minOccurs="1" maxOccurs="1" />
+      <xs:element name="fee_tax_inc_amount" type="xs:decimal" minOccurs="1" maxOccurs="1" />
+      <xs:element name="subscription_tax_inc_amount" type="xs:decimal" minOccurs="1" maxOccurs="1" />
+      <xs:element name="refund_fee_tax_inc_amount_payable" type="xs:decimal" minOccurs="1" maxOccurs="1" />
+      <xs:element name="refund_fee_tax_inc_amount_paid" type="xs:decimal" minOccurs="1" maxOccurs="1" />
+      <xs:element name="refund_subscription_period_tax_inc_amount_payable" type="xs:decimal" minOccurs="1" maxOccurs="1" />
+      <xs:element name="refund_subscription_period_tax_inc_amount_paid" type="xs:decimal" minOccurs="1" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+
+  
+  <!-- SERVICES (for requests and responses) -->
+  <xs:element name="shop_invoices_query" type="shop_invoices_query_request" />
+  <xs:element name="shop_invoices_query_response" type="shop_invoices_query_response" />
+
+</xs:schema>

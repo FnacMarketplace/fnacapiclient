@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://www.fnac.com/schemas/mp-dialog.xsd" elementFormDefault="qualified" xmlns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:mstns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<!-- COMMON TYPES -->
+  <!-- string size restriction   -->
+  <xs:simpleType name="string255">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="255" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- String firstname, lastname, city  -->
+  <xs:simpleType name="string100">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- String phone, mobile  -->
+  <xs:simpleType name="string15">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- String zipcode  -->
+  <xs:simpleType name="string32">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="32" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- order_culture restriction -->
+	<xs:simpleType name="string5">
+	  <xs:restriction base="xs:string">
+	    <xs:minLength value="5" />
+	    <xs:maxLength value="5" />
+	  </xs:restriction>
+	</xs:simpleType>
+
+   <!-- Unique identifier -->
+  <xs:simpleType name="uuid">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Stores a Fnac.com unique user identifier]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Integer or empty type (ex: showcase) -->
+  <xs:simpleType name="nullNonNegativeInteger">
+    <xs:union memberTypes="xs:nonNegativeInteger empty" />
+  </xs:simpleType>
+  
+  <!-- Decimal or empty type (ex: pricing service prices) -->
+  <xs:simpleType name="nullDecimal">
+    <xs:union memberTypes="xs:decimal empty" />
+  </xs:simpleType>
+  
+  <!-- boolean or empty type -->
+  <xs:simpleType name="nullBoolean">
+    <xs:union memberTypes="xs:boolean empty" />
+  </xs:simpleType>
+
+  <xs:simpleType name="empty">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="0" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Country code  -->
+  <xs:simpleType name="country_code">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[ISO_3166-1 alpha-3 representation of the country]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[a-zA-Z]{3}" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- status code  -->
+  <xs:simpleType name="status_code">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Presents the status of the last operation. More details are available in the sub levels presenting errors)]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="OK">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Result is OK]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ACTIVE">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Process is active]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="RUNNING">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Process is active and being processed]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="OK">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Process finished without any error or warning]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="WARNING">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Process finished with at least a warning and no error]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ERROR">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Process finished with at least an error, but no blocking error was encountered]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FATAL">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[A fatal error occured while processing, the process was not done completely or even completely aborted]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Severity of error -->
+  <xs:simpleType name="severity_code">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Describes the severity of an error that was encountered during processing]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="WARNING">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Some non mandatory data may have been invalid, this data was ignored, the process ignored this error and continued]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ERROR">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Some mandatory data may have been invalid, or a processing error occured, the parent element (order line or offer) may not have been processed, a retry will be necessary]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FATAL">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[A fatal error occured while processing the file, some or all data in the stream may not have been porcessed, check the stream and resend]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- quantity range restriction -->
+  <xs:simpleType name="quantity_0_9999">
+    <xs:restriction base="xs:nonNegativeInteger">
+      <xs:maxInclusive value="9999"/>
+      <xs:minInclusive value="0"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- price range restriction -->
+  <xs:simpleType name="price_090_20000">
+    <xs:restriction base="xs:decimal">
+      <xs:maxInclusive value="20000"/>
+      <xs:minExclusive value="0.89"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- order_id restriction -->
+  <xs:simpleType name="order_id_restriction">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="13" />
+      <xs:maxLength value="13" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- treatment restriction -->
+  <xs:simpleType name="offer_treatment">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Defines a specific treatment for this offer]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="delete">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Delete the offer]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <!-- date or empty -->
+  <xs:simpleType name="nullDateTime">
+    <xs:union memberTypes="xs:dateTime empty" />
+  </xs:simpleType>
+  
+  <xs:simpleType name="market_code">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Code used to identify the related entity's market]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="FR">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[France Market code]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="BE">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Belgium Market code]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ES">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Spain Market code]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PT">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Portugal Market code]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Promotion data -->
+  <xs:simpleType name="_promotion_type">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Define the promotion code type]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer">
+      <xs:enumeration value="1"></xs:enumeration>
+      <xs:enumeration value="2"></xs:enumeration>
+      <xs:enumeration value="3"></xs:enumeration>
+      <xs:enumeration value="4"></xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="promotion_type">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Represents the types of promotion accepted by the platform]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Sales">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Promotion of type Sales]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Destocking">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Promotion of type Destocking and subtype Destocking]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="GoodDeal">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Promotion of type GoodDeal and subtype Destocking]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Batch">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Promotion of type Batch and subtype Destocking]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FlashSale">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Promotion of type Flash Sale]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FreeShipping">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Promotion of type Free Shipping]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="promotion_uid">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="50"/>
+      <xs:pattern value="[a-zA-Z0-9]+"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

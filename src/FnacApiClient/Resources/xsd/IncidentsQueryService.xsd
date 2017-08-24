@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://www.fnac.com/schemas/mp-dialog.xsd" elementFormDefault="qualified" xmlns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:mstns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:include schemaLocation="base.xsd"/>
+
+  <!-- ORDER QUERY REQUEST -->
+  <xs:complexType name="incidents_query_request">
+    <xs:complexContent>
+      <xs:extension base="base_request">
+        <xs:sequence>
+          <xs:element name="paging" type="xs:int" minOccurs="0" maxOccurs="1" />
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="date" type="_incidents_date_constraints_query_request" />
+            <xs:element name="status" type="_incident_state" minOccurs="0"/>
+            <xs:element name="type" type="incident_open_state" minOccurs="0"/>
+            <xs:element name="types" type="incident_open_states" />
+            <xs:element name="incident_id" type="uuid" />
+            <xs:element name="incidents_id" type="_incident_id" />
+            <xs:element name="closed_statuses" type="incident_close_states" />
+            <xs:element name="closed_status" type="incident_close_state" />
+            <xs:element name="waiting_for_seller_answer" type="incident_seller_waiting_answer" minOccurs="0" />
+            <xs:element name="opened_by" type="_incident_by" minOccurs="0" />
+            <xs:element name="closed_by" type="_incident_by" minOccurs="0" />
+            <xs:element name="sort_by" type="sort_constraint_type" minOccurs="0" />
+            <xs:element name="order" type="order_id_restriction" minOccurs="0"/>
+            <xs:element name="orders" type="incidents_fnac_id_type" minOccurs="0" />
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="results_count" type="xs:positiveInteger" use="optional" default="100" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+
+  <xs:complexType name="incidents_fnac_id_type">
+    <xs:sequence>
+      <xs:element name="order" type="order_id_restriction" minOccurs="0" maxOccurs="50" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="incident_open_states">
+    <xs:sequence>
+      <xs:element name="type" type="incident_open_state" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="_incident_id">
+    <xs:sequence>
+      <xs:element name="incident_id" type="uuid" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+
+  <xs:complexType name="incident_close_states">
+    <xs:sequence>
+      <xs:element name="closed_status" type="incident_close_state" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="_incidents_date_constraints_query_request">
+    <xs:sequence>
+      <xs:element name="min" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+      <xs:element name="max" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="type" type="incident_date_constraint" use="required" />
+  </xs:complexType>
+
+  <!-- ORDER QUERY RESPONSE -->
+  <xs:complexType name="incidents_query_response">
+    <xs:complexContent>
+      <xs:extension base="base_response">
+        <xs:sequence>
+          <xs:element name="error" type="error" minOccurs="0" maxOccurs="unbounded" />
+          <xs:element name="page" type="xs:int" minOccurs="0" maxOccurs="1" />
+          <xs:element name="total_paging" type="xs:int" minOccurs="0" maxOccurs="1" />
+          <xs:element name="nb_total_per_page" type="xs:int" minOccurs="0" maxOccurs="1" />
+          <xs:element name="nb_total_result" type="xs:int" minOccurs="0" maxOccurs="1" />
+          <xs:element name="incident" type="_incident_query_response" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="incident_header_response">
+    <xs:all>
+      <xs:element name="status" type="_incident_state" minOccurs="1" maxOccurs="1" />
+      <xs:element name="waiting_for_seller_answer" type="incident_seller_waiting_answer" minOccurs="1" maxOccurs="1" />
+      <xs:element name="message" type="xs:string" minOccurs="1" maxOccurs="1" />
+      <xs:element name="opened_by" type="_incident_by" minOccurs="1" maxOccurs="1" />
+      <xs:element name="closed_by" type="_incident_by" minOccurs="0" maxOccurs="1" />
+      <xs:element name="closed_status" type="incident_close_state" minOccurs="0" maxOccurs="1" />
+      <xs:element name="created_at" type="xs:dateTime" minOccurs="1" maxOccurs="1" />
+      <xs:element name="updated_at" type="xs:dateTime" minOccurs="1" maxOccurs="1" />
+      <xs:element name="closed_at" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+      <xs:element name="order_id" type="xs:string" minOccurs="1" maxOccurs="1" />
+    </xs:all>
+  </xs:complexType>
+
+  <xs:complexType name="_incident_refund">
+    <xs:all>
+      <xs:element name="product_amount" type="xs:decimal" minOccurs="1" maxOccurs="1" />
+      <xs:element name="shipping_amount" type="xs:decimal" minOccurs="1" maxOccurs="1" />
+      <xs:element name="fee_ht_amount" type="xs:decimal" minOccurs="1" maxOccurs="1" />
+      <xs:element name="created_at" type="xs:dateTime" minOccurs="1" maxOccurs="1" />
+    </xs:all>
+  </xs:complexType>
+
+  <xs:complexType name="incident_refunds">
+    <xs:all>
+      <xs:element name="refund" type="_incident_refund" minOccurs="1" maxOccurs="1" />
+    </xs:all>
+  </xs:complexType>
+
+  <xs:complexType name="incident_order_detail_incident">
+    <xs:all>
+      <xs:element name="order_detail_id" type="xs:integer" minOccurs="1" maxOccurs="1" />
+      <xs:element name="type" type="incident_open_state" minOccurs="1" maxOccurs="1" />
+      <xs:element name="status" type="_incident_state" minOccurs="1" maxOccurs="1" />
+      <xs:element name="created_at" type="xs:dateTime" minOccurs="1" maxOccurs="1" />
+      <xs:element name="updated_at" type="xs:dateTime" minOccurs="1" maxOccurs="1" />
+      <xs:element name="refunds" type="incident_refunds" minOccurs="0" maxOccurs="1" />
+    </xs:all>
+  </xs:complexType>
+
+  <xs:complexType name="incident_order_details_response">
+    <xs:all>
+      <xs:element name="order_detail_incident" type="incident_order_detail_incident" minOccurs="1" maxOccurs="1" />
+    </xs:all>
+  </xs:complexType>
+
+  <xs:complexType name="_incident_query_response">
+    <xs:all>	
+      <xs:element name="header" type="incident_header_response" minOccurs="1" maxOccurs="1" />
+      <xs:element name="order_details_incident" type="incident_order_details_response" minOccurs="1" maxOccurs="1" />
+    </xs:all>	
+    <xs:attribute name="id" type="uuid" />
+  </xs:complexType>
+
+  <!-- SERVICES (for requests and responses) -->
+  <xs:element name="incidents_query" type="incidents_query_request" />
+  <xs:element name="incidents_query_response" type="incidents_query_response" />
+
+</xs:schema>

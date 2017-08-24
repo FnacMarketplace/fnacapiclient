@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://www.fnac.com/schemas/mp-dialog.xsd" elementFormDefault="qualified" xmlns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:mstns="http://www.fnac.com/schemas/mp-dialog.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:include schemaLocation="base.xsd"/>
+
+  <!-- pricing query -->
+  <xs:complexType name="pricing_query_request">
+    <xs:complexContent>
+      <xs:extension base="base_request">
+        <xs:sequence>
+          <xs:element name="product_reference" type="commercial_product_reference" minOccurs="1" maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attribute name="sellers" type="pricing_sellers">
+          <xs:annotation>
+            <xs:documentation>
+              <![CDATA[Defines which sellers to use]]>
+            </xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="pricing_query_response">
+    <xs:complexContent>
+      <xs:extension base="base_response">
+        <xs:sequence>
+          <xs:element name="pricing_product" type="_pricing_query_response" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="_pricing_query_response">
+    <xs:sequence>
+      <xs:element name="product_reference" type="commercial_product_reference" minOccurs="1" maxOccurs="1" />
+      <xs:element name="ean" type="xs:string" minOccurs="0" maxOccurs="1" />      
+      <xs:element name="product_url" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="product_name" type="string255" minOccurs="1" maxOccurs="1" />
+      <xs:element name="image_url" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="seller_price" type="xs:decimal" minOccurs="0" maxOccurs="1" />
+      <xs:element name="seller_shipping" type="xs:decimal" minOccurs="0" maxOccurs="1" /> 
+      <xs:element name="seller_offer_sku" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="seller_offer_state" type="xs:integer" minOccurs="0" maxOccurs="1" />
+      <xs:element name="seller_adherent_price" type="xs:decimal" minOccurs="0" maxOccurs="1" />
+      <xs:element name="seller_adherent_shipping" type="xs:decimal" minOccurs="0" maxOccurs="1" />
+      <xs:element name="seller_adherent_offer_state" type="xs:integer" minOccurs="0" maxOccurs="1" />
+      <xs:element name="seller_adherent_offer_sku" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="new_price" type="nullDecimal" minOccurs="0" maxOccurs="1" />
+      <xs:element name="new_shipping" type="nullDecimal" minOccurs="0" maxOccurs="1" />
+      <xs:element name="refurbished_price" type="nullDecimal" minOccurs="0" maxOccurs="1" />
+      <xs:element name="refurbished_shipping" type="nullDecimal" minOccurs="0" maxOccurs="1" />
+      <xs:element name="used_price" type="nullDecimal" minOccurs="0" maxOccurs="1" />
+      <xs:element name="used_shipping" type="nullDecimal" minOccurs="0" maxOccurs="1" />
+      <xs:element name="new_adherent_price" type="nullDecimal" minOccurs="0" maxOccurs="1" />
+      <xs:element name="new_adherent_shipping" type="nullDecimal" minOccurs="0" maxOccurs="1" />
+      <xs:element name="refurbished_adherent_price" type="nullDecimal" minOccurs="0" maxOccurs="1" />
+      <xs:element name="refurbished_adherent_shipping" type="nullDecimal" minOccurs="0" maxOccurs="1" />
+      <xs:element name="used_adherent_price" type="nullDecimal" minOccurs="0" maxOccurs="1" />
+      <xs:element name="used_adherent_shipping" type="nullDecimal" minOccurs="0" maxOccurs="1" />      
+      <xs:element name="pricing" type="_pricing_items_response" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="error" type="error" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="_pricing_items_response">
+	<xs:sequence>
+	  <xs:element name="evaluation" type="xs:decimal" minOccurs="0" maxOccurs="1" />
+	  <xs:element name="nb_orders" type="xs:nonNegativeInteger" minOccurs="0" maxOccurs="1" />
+	  <xs:element name="seller" type="string255" minOccurs="0" maxOccurs="1" />
+	  <xs:element name="seller_url" type="xs:string" minOccurs="0" maxOccurs="1" />
+	  <xs:element name="price" type="nullDecimal" minOccurs="1" maxOccurs="1" />
+	  <xs:element name="shipping_price" type="nullDecimal" minOccurs="1" maxOccurs="1" />
+	  <xs:element name="offer_status" type="product_state" minOccurs="1" maxOccurs="1" />
+	</xs:sequence>
+	<xs:attribute name="type" type="pricing_type" use="required" />
+  </xs:complexType>
+
+  <xs:simpleType name="pricing_type">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Defines the type of sellers]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="professional">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Professional seller]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="not professional">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Not professional seller]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="fnac">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Fnac one]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:element name="pricing_query" type="pricing_query_request" />
+  <xs:element name="pricing_query_response" type="pricing_query_response" />
+</xs:schema>

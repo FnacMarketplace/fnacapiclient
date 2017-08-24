@@ -1,0 +1,122 @@
+body { padding-top: 70px; }
+
+.infobox {
+  float: left;
+  margin: 1em;
+  padding: 0 1em;
+  height: 120px;
+  min-width: 120px;
+  border: solid thin #CCC;
+}
+
+.infobox h2 {
+  color: #666;
+  font-size: 11pt;
+  padding: 0 0 10px;
+}
+
+.infobox p {
+  bottom: 15px;
+  color: #666;
+  font-size: 45pt;
+  position: relative;
+  right: 0;
+  text-align: right;
+}
+
+/* Orders details */
+
+.detailed_order {
+  display: none;
+  background: #FFF;
+  border: solid thin #666;
+  width: 630px;
+  padding: 1em;
+}
+
+.main_info {
+  font-size: 14pt;
+  padding-bottom: 0.25em;
+}
+
+.side_info {
+  font-size: 10pt;
+  padding-bottom: 0.25em;
+  color: #666;
+  font-style: italic;
+}
+.status {
+  font-style: normal;
+  font-weight: bold;
+}
+
+.order_detail_row {    
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.order_detail_price {
+  border-left: solid thin #CCC;
+}
+
+.order_detail_total_amount {
+  font-size: 2em;
+  border-top: solid thin #CCC;
+}
+
+.pricing {
+    font-size: 8pt;
+}
+
+
+/* XML debug section */
+
+#debug_info_button {
+  position: absolute;
+  right: 10px;
+  top: 100px;
+  z-index: 100;
+  cursor: pointer;
+}
+
+#debug_info {
+  display: none;
+  position: absolute;
+  top: 100px;
+  right: 10px;
+  z-index: 100;
+  width: 35%;
+  padding: 2em 2em;
+  background: #fefefe;
+  border: solid thin #666;
+  height: 85%;
+  overflow-y: auto;
+}
+#debug_info h1 {
+  margin: 2em 0 1em 0;
+  padding: 0;
+  font-size: 1.2em;
+}
+#hideXML {
+  text-align: right;
+  cursor: pointer;
+}
+#debug_info code {
+  font: 0.8em monospace;
+  white-space: pre-wrap;
+}
+#debug_info code span.bracket {
+  color: #00f;
+}
+#debug_info code span.xmlbracket {
+  color: #800000;
+}
+#debug_info code span.tag {
+  color: #808000;
+}
+#debug_info code span.attr {
+  color: #800080;
+}
+#debug_info code span.value {
+  color: #f0f;
+}
