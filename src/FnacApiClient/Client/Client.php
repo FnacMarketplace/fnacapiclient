@@ -31,6 +31,10 @@ use FnacApiClient\Toolbox\StringObject;
  */
 class Client
 {
+    const METHOD = 'POST';
+    const ENCTYPE = 'text/xml';
+    const ADAPTER = 'Zend\Http\Client\Adapter\Curl';
+
     /**
      * Serializer to convert xml to object and object to xml
      *
@@ -218,7 +222,7 @@ class Client
         return $request;
     }
 
-    private function sendRequest($service, $request, $method = 'POST', $enctype = 'text/xml', $adapter = 'Zend\Http\Client\Adapter\Curl')
+    private function sendRequest($service, $request)
     {
         $this->log(sprintf(" Service Request Data  : \n%s", StringObject::prettyXml($request)), Logger::INFO);
 
@@ -232,9 +236,9 @@ class Client
         $this->log(sprintf(" Service Request URI  : %s", $this->getUri()), Logger::INFO);
 
         $this->streamClient->setRawBody($request);
-        $this->streamClient->setMethod($method);
-        $this->streamClient->setEncType($enctype);
-        $this->streamClient->setAdapter($adapter);
+        $this->streamClient->setMethod(self::METHOD);
+        $this->streamClient->setEncType(self::ENCTYPE);
+        $this->streamClient->setAdapter(self::ADAPTER);
 
         return $this->streamClient->send();
     }
