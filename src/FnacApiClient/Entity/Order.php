@@ -120,10 +120,10 @@ class Order extends Entity
             if ($this->orders_detail->count() > 1) {
                 $data['order_detail'] = array();
                 foreach ($this->orders_detail as $order_detail) {
-                    $data['order_detail'][] = $order_detail->normalize($serializer, $format, $properties);
+                    $data['order_detail'][] = $order_detail->normalize($serializer, $format);
                 }
             } else {
-                $data['order_detail'] = $this->orders_detail[0]->normalize($serializer, $format, $properties);
+                $data['order_detail'] = $this->orders_detail[0]->normalize($serializer, $format);
             }
         }
         return $data;
