@@ -185,7 +185,7 @@ class Client
         $this->log(sprintf(" Service Request Response HEADER :\n%s", print_r($response->getHeaders(), true)), Logger::DEBUG);
         if ($response->isClientError())
         {
-            $this->log(sprintf(" Service Request Response ERROR : %s", $response->getMessage()), Logger::ERROR);
+            $this->log(sprintf(" Service Request Response ERROR : %s", $response->renderStatusLine()), Logger::ERROR);
             //throw new ErrorResponseException($response);
         }
 
