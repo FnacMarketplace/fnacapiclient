@@ -49,8 +49,8 @@ class Address extends Entity
         $this->lastname = $data['lastname'];
         $this->company = $data['company'];
         $this->address1 = $data['address1'];
-        $this->address2 = $data['address2'];
-        $this->address3 = $data['address3'];
+        $this->address2 = isset($data['address2']) ? $data['address2'] : "";
+        $this->address3 = isset($data['address3']) ? $data['address3'] : "";
         $this->zipcode = $data['zipcode'];
         $this->city = $data['city'];
         $this->country = $data['country'];
