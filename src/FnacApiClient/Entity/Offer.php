@@ -48,6 +48,7 @@ class Offer extends Entity
     private $description;
     private $internal_comment;
     private $showcase;
+    private $promotion;
 
     const STATE_NEW             = 11;    
     const STATE_USED_AS_NEW     = 1;
@@ -115,6 +116,10 @@ class Offer extends Entity
         if (!is_null($this->treatment)) {
             $data['treatment'] = $this->treatment;
         }
+
+        if (!is_null($this->promotion)) {
+            $data['promotion'] = $this->promotion;
+        }
         
         return $data;
     }
@@ -144,8 +149,23 @@ class Offer extends Entity
 
         $this->offer_reference = $this->offer_fnac_id;
         $this->offer_reference_type = ProductType::ITEM_ID;
-        $this->fee_excluding_taxes = (float) $data['fee_excluding_taxes'];
-        $this->fee_including_all_taxes = (float) $data['fee_including_all_taxes'];
+        
+        if(isset($data['fee_excluding_taxes']))
+        {
+            $this->fee_excluding_taxes = (float) $data['fee_excluding_taxes'];
+        }
+        
+        if(isset($data['fee_including_all_taxes']))
+        {
+            $this->fee_including_all_taxes = (float) $data['fee_including_all_taxes'];
+        }
+
+        if(isset($data['promotion']))
+        {
+            $tmpObj = new Promotion();
+            $tmpObj->denormalize($serializer, $data['promotion'], $format);
+            $this->promotion = $tmpObj;
+        }
     }
 
     /**
@@ -272,6 +292,16 @@ class Offer extends Entity
     public function setTreatment($treatment)
     {
         $this->treatment = $treatment;
+    }
+
+    /**
+     * Set promotion to on offer
+     *
+     * @param Promotion $promotion
+     */
+    public function setPromotion($promotion)
+    {
+        $this->promotion = $promotion;
     }
 
     /**
