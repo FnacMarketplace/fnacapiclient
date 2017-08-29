@@ -63,17 +63,20 @@ class Promotion extends Entity
             $data['discount_value'] = $this->discount_value;
         }
 
-        if(!is_null($this->triggers)) {            
-            $data['trigger_cart'] = array(
+        if(!is_null($this->trigger_cart)) {
+            
+            $data['triggers'] = array();
+            
+            $data['triggers']['trigger_cart'] = array(
                 '@type' => $this->trigger_cart_type, '#' => $this->trigger_cart
              );
             
             if($this->trigger_promotion_code) {
-                $data['trigger_promotion_code'] = $this->trigger_promotion_code;
+                $data['triggers']['trigger_promotion_code'] = $this->trigger_promotion_code;
             }
             
             if($this->trigger_customer_type) {
-                $data['trigger_customer_type'] = $this->trigger_customer_type;
+                $data['triggers']['trigger_customer_type'] = $this->trigger_customer_type;
             }
         }
         
@@ -91,10 +94,10 @@ class Promotion extends Entity
         $this->ends_at = $data['ends_at'];
         $this->discount_type = $data['discount_type'];
         $this->discount_value = $data['discount_value'];
-        $this->trigger_cart_type = $data['trigger_cart']['@type'];
-        $this->trigger_cart = $data['trigger_cart']['#'];
-        $this->trigger_promotion_code = $data['trigger_promotion_code'];
-        $this->trigger_customer_type = $data['trigger_customer_type'];
+        $this->trigger_cart_type = $data['triggers']['trigger_cart']['@type'];
+        $this->trigger_cart = $data['triggers']['trigger_cart']['#'];
+        $this->trigger_promotion_code = $data['triggers']['trigger_promotion_code'];
+        $this->trigger_customer_type = $data['triggers']['trigger_customer_type'];
     }
 
     /**
