@@ -31,10 +31,13 @@ class ShopInvoiceQueryResponse extends QueryResponse
         parent::denormalize($serializer, $data, $format);
         
         $this->shop_invoices = new \ArrayObject();
-        foreach ($data['shop_invoice'] as $shop_invoice) {
-            $shopInvoiceObj = new ShopInvoice();
-            $shopInvoiceObj->denormalize($serializer, $shop_invoice, $format);
-            $this->shop_invoices[] = $shopInvoiceObj;
+        
+        if(!empty($data['shop_invoice'])) {
+            foreach ($data['shop_invoice'] as $shop_invoice) {
+                $shopInvoiceObj = new ShopInvoice();
+                $shopInvoiceObj->denormalize($serializer, $shop_invoice, $format);
+                $this->shop_invoices[] = $shopInvoiceObj;
+            }
         }
     }
 
