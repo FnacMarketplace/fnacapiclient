@@ -32,17 +32,20 @@ class PricesQueryResponse extends ResponseService
         
         $this->pricing_products = new \ArrayObject();
 
-        if (isset($data['pricing_products'])) {
-            if (isset($data['pricing_products']['pricing_product'])) {
-                foreach ($data['pricing_products']['pricing_product'] as $pricing_product) {
+        if (isset($data['pricing_products'])) {            
+            $prices_array = $data['pricing_products']['pricing_product'];
+            
+            if(isset($prices_array['product_reference'])) {
+                $tmpObj = new PricingProduct();
+                $tmpObj->denormalize($serializer, $prices_array, $format);
+                $this->pricing_products[] = $tmpObj;
+            }
+            else {
+                foreach ($prices_array as $pricing_product) {
                     $tmpObj = new PricingProduct();
                     $tmpObj->denormalize($serializer, $pricing_product, $format);
                     $this->pricing_products[] = $tmpObj;
                 }
-            } elseif (!empty($data['pricing_products'])) {
-                $tmpObj = new PricingProduct();
-                $tmpObj->denormalize($serializer, $data['pricing_products']['pricing_product'], $format);
-                $this->pricing_products[] = $tmpObj;
             }
         }
     }
