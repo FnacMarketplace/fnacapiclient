@@ -68,11 +68,26 @@ body { padding-top: 70px; }
     font-size: 8pt;
 }
 
+.message_id {
+    font-size: 9pt;
+    color: lightgray;
+}
+
+.detailed_message {
+  display: none;
+  border: solid thin #666;
+  width: 630px;
+  padding: 1em;
+}
+
+.message_content {
+    font-style: italic;
+}
 
 /* XML debug section */
 
 #debug_info_button {
-  position: absolute;
+  float: right;
   right: 10px;
   top: 100px;
   z-index: 100;

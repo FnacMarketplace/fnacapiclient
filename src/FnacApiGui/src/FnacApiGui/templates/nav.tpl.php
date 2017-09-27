@@ -15,6 +15,12 @@
           </ul>
         </li>
         <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Messages <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="messages_query.php">All</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Incidents <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="incidents_query.php">All</a></li>
