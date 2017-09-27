@@ -4,6 +4,8 @@
   <body>
 
     <?php include('nav.tpl.php'); ?>
+      
+    <?php include('debug_info.tpl.php'); ?>
 
     <div class="container">
     <?php if(isset($batch_id)): ?>
@@ -98,6 +100,5 @@
           
     </div>
 
-    <?php include('debug_info.tpl.php'); ?>
   </body>
 </html>

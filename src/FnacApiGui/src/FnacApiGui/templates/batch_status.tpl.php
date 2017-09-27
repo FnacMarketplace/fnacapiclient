@@ -5,6 +5,8 @@
 
     <?php include('nav.tpl.php'); ?>
 
+    <?php include('debug_info.tpl.php'); ?>
+
     <div class="container">
 
         <div id="batch">
@@ -50,8 +52,6 @@
     <?php include('footer.tpl.php'); ?>
 
     </div>
-
-    <?php include('debug_info.tpl.php'); ?>
 
   </body>
 </html>

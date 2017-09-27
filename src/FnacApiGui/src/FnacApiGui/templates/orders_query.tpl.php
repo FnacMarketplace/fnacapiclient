@@ -5,6 +5,8 @@
 
     <?php include('nav.tpl.php'); ?>
 
+    <?php include('debug_info.tpl.php'); ?>
+      
     <div class="container">
     <?php if (count($orders) > 0): ?>
       <div id="paging">
@@ -19,7 +21,6 @@
               <th scope="col" class="small">Total amount</th>
               <th scope="col" class="small">Client</th>
               <th scope="col" class="small">Date</th>
-              <th scope="col">Order details</th>
             </tr>
           </thead>
           <?php // Calculating total amount for each order ?>
@@ -33,16 +34,10 @@
               }
             ?>
             <tr>
-              <td><?php echo $order->getOrderId(); ?></td>
-              <td><?php echo $order->getState(); ?></td>
-              <td><?php echo $total_amount; ?> &euro;</td>
-              <td><?php echo $order->getClientFirstName() . ' ' . $order->getClientLastName(); ?></td>
-              <td><?php echo date('d/m/Y H:i', strtotime($order->getCreatedAt())); ?></td>
               <td>
-                <a class="detailed_order_button" href="#" onclick="displayOrderDetails(this);return false;">Details</a>
-
-                <!-- Order detail block -->
-                <div class="detailed_order">
+                  <a class="detailed_order_button" href="#" onclick="displayOrderDetails(this);return false;"><?php echo $order->getOrderId(); ?></a>
+                  <!-- Order detail block -->
+                  <div class="detailed_order">
                     <div class="row">
                         <div class="col-xs-11"><h2>Order No. <?php echo $order->getOrderId(); ?></h2></div>
                         <div class="col-xs-1"><button type="button" class="close" onclick="closeDetails(this);return false;"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button></div>
@@ -114,8 +109,11 @@
                         </div>
                     </div>
                 </div>
-
               </td>
+              <td><?php echo $order->getState(); ?></td>
+              <td><?php echo $total_amount; ?> &euro;</td>
+              <td><?php echo $order->getClientFirstName() . ' ' . $order->getClientLastName(); ?></td>
+              <td><?php echo date('d/m/Y H:i', strtotime($order->getCreatedAt())); ?></td>
             </tr>
           <?php endforeach; ?>
         </table>
@@ -150,8 +148,6 @@
     <?php include('footer.tpl.php'); ?>
 
     </div>
-
-    <?php include('debug_info.tpl.php'); ?>
 
   </body>
 </html>

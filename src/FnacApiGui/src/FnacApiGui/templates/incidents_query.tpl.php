@@ -5,8 +5,10 @@
 
     <?php include('nav.tpl.php'); ?>
 
+    <?php include('debug_info.tpl.php'); ?>
+
     <div class="container">
-        
+
     <?php if (count($incidents) > 0): ?>
       <div id="data">
         <table id="incidents_query_table" class="table">
@@ -57,12 +59,10 @@
         No incident.
       </div>
     <?php endif; ?>
-      
-    <?php include('footer.tpl.php'); ?>
-        
-    </div>
 
-    <?php include('debug_info.tpl.php'); ?>
+    <?php include('footer.tpl.php'); ?>
+
+    </div>
 
   </body>
 </html>

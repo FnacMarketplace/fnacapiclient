@@ -5,6 +5,8 @@
 
     <?php include('nav.tpl.php'); ?>
 
+    <?php include('debug_info.tpl.php'); ?>
+
     <div class="container">
 
     <?php if (count($batches) > 0): ?>
@@ -38,8 +40,6 @@
     <?php include('footer.tpl.php'); ?>
     
     </div>
-
-    <?php include('debug_info.tpl.php'); ?>
 
   </body>
 </html>
