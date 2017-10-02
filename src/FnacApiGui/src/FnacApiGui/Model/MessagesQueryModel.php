@@ -31,7 +31,7 @@ class MessagesQueryModel extends Model
   }
 
   /**
-   * Retrieves Incident query response
+   * Retrieves Messages query response
    *
    * @param SimpleClient $client
    * @return ResponseService
@@ -39,8 +39,12 @@ class MessagesQueryModel extends Model
   public function retrieveMessagesResponse($client, $options = array())
   {
     $defaults = array(
+        'status' => null,
+        'archived' => 'FALSE',
         'sort_by' => 'date',
-        'sort_by_type' => 'DESC'
+        'sort_by_type' => 'DESC',
+        'page' => 1,
+        'results_per_page' => 10,
     );
     $options = array_merge($defaults, $options);
     extract($options);
@@ -48,6 +52,19 @@ class MessagesQueryModel extends Model
     $messageQuery = new MessageQuery();
 //    $messageQuery->setSortBy($sort_by);
 //    $messageQuery->setSortByType($sort_by_type);
+    
+    $messageQuery->setPaging($page);
+    $messageQuery->setResultsCount($results_per_page);
+    
+    if (isset($state))
+    {
+      $messageQuery->setMessageState($state);
+    }
+    
+    if (isset($archived))
+    {
+      $messageQuery->setMessageArchived($archived);
+    }
 
     $messageQueryResponse = $client->callService($messageQuery);
 

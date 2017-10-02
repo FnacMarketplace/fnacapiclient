@@ -18,14 +18,13 @@
               <th scope="col" class="small">Type</th>
               <th scope="col" class="small">Message</th>
               <th scope="col" class="small">Created</th>
-              <th scope="col" class="small">Sender</th>
             </tr>
           </thead>
 
           <?php foreach($messages as $message): ?>
           <tr>
             <td>
-                <a class="detailed_message_button" href="#" onclick="displayMessageDetails(this);return false;"><?php echo $message->getMessageReferer(); ?></a>
+                <a class="detailed_message_button" <?php echo $message->getState() == \FnacApiClient\Type\MessageStateType::READ ? "" : "style=\"font-weight: bold\"" ?> href="#" onclick="displayMessageDetails(this);return false;"><?php echo $message->getMessageReferer(); ?></a>
                   <!-- Order detail block -->
                   <div class="detailed_message">
                     <div class="row">
@@ -41,14 +40,28 @@
                     </div>
                 </div>
             </td>
-            <td><span class="label <?php echo $message->getMessageRefererType() == \FnacApiClient\Type\MessageType::OFFER ? "label-default" : "label-danger" ?>"><?php echo $message->getMessageRefererType(); ?></span></td>
+            <td><span class="label <?php echo $message->getMessageRefererType() == \FnacApiClient\Type\MessageType::OFFER ? "label-primary" : "label-warning" ?>"><?php echo $message->getMessageRefererType(); ?></span></td>
             <td><?php echo nl2br($message->getMessageSubject()); ?></td>
             <td>
               <?php echo date('d/m/Y H:i', strtotime($message->getCreatedAt())); ?><br />
-              <span class="label label-default">by <?php echo $message->getMessageFrom(); ?></span>
-            </td>
-            <td>
-              <span class="label label-default"><?php echo $message->getMessageFromType(); ?></span>
+              <?php                
+                $label_class = "label-default";
+                
+                switch ($message->getMessageFromType()) {
+                    case \FnacApiClient\Type\MessageFromType::CLIENT:
+                        $label_class = "label-danger";
+                        break;
+                        
+                    case \FnacApiClient\Type\MessageFromType::SELLER:
+                        $label_class = "label-primary";
+                        break;
+                        
+                    case \FnacApiClient\Type\MessageFromType::CALLCENTER:
+                        $label_class = "label-warning";
+                        break;
+                }
+              ?>
+              <span class="label label-default">by <?php echo $message->getMessageFrom(); ?></span> <span class="label <?php echo $label_class ?>"><?php echo $message->getMessageFromType(); ?></span>
             </td>
           </tr>
           <?php endforeach; ?>
@@ -71,6 +84,10 @@
           }
         </script>
       </div>
+
+      <?php $base_page = "messages_query.php?"; ?>
+      <?php include('pager.tpl.php'); ?>
+        
     <?php else: ?>
       <div class="no_orders">
         No message.

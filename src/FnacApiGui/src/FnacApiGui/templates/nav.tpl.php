@@ -18,6 +18,9 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Messages <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="messages_query.php">All</a></li>
+            <li><a href="messages_query.php?state=UNREAD&archived=FALSE">Unread</a></li>
+            <li><a href="messages_query.php?state=READ&archived=FALSE">Read</a></li>
+            <li><a href="messages_query.php?archived=TRUE">Archived</a></li>
           </ul>
         </li>
         <li class="dropdown">

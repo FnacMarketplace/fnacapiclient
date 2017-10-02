@@ -44,10 +44,25 @@ class MessagesQueryView extends View
     $data = $this->controller->getData($options);
 
     $messages = $data->getMessages();
-
+    $page = $data->getPage();                         // Page number
+    $total_paging = $data->getTotalPaging();          // Total number of pages
+    $nb_total_per_page = $data->getNbTotalPerPage();  // Number of messages per page
+    $nb_total_result = $data->getNbTotalResult();     // Total number of messages
+    
     $xml_request = self::xml_highlight($this->controller->getRequest(), true); // Plain XML request sent to the service, for education or debugging purpose
     $xml_response = self::xml_highlight($this->controller->getResponse());     // Plain XML response received from the service, for education or debugging purpose
 
+    $pager_info = NULL;
+    $pager_limit = NULL;
+    $i = NULL;
+    
+    if($nb_total_result > 0)
+    {
+        $pager_info = $this->buildPager($page, $total_paging);
+        $pager_limit = $pager_info['pager_limit'];
+        $i = $pager_info['i'];
+    }
+    
     require_once($this->model->template);
   }
 
