@@ -212,6 +212,7 @@
       <xs:element name="treatment" type="offer_treatment" minOccurs="0" maxOccurs="1" />
       <xs:element name="pictures" type="pictures" minOccurs="0" maxOccurs="1" />
       <xs:element name="logistic_type_id" type="string255" minOccurs="0" maxOccurs="1" />
+      <xs:element name="time_to_ship" type="xs:integer" minOccurs="0" maxOccurs="1" />
     </xs:all>
   </xs:complexType>
 

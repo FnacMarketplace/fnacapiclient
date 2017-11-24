@@ -91,6 +91,7 @@
 			<xs:element name="image" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="nb_messages" type="xs:nonNegativeInteger" minOccurs="0" maxOccurs="1" />
 			<xs:element name="showcase" type="nullNonNegativeInteger" minOccurs="0" maxOccurs="1" />
+                        <xs:element name="time_to_ship" type="xs:integer" minOccurs="0" maxOccurs="1" />
 		</xs:all>
 	</xs:complexType>
 
