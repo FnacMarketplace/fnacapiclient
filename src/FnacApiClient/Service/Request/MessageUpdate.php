@@ -9,7 +9,7 @@
 
 namespace FnacApiClient\Service\Request;
 
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 use FnacApiClient\Entity\Message;
 
@@ -41,18 +41,18 @@ class MessageUpdate extends Authentified
     /**
      * {@inheritdoc}
      */
-    public function normalize(SerializerInterface $serializer, $format = null)
+    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
     {
-        $data = parent::normalize($serializer, $format);
+        $data = parent::normalize($normalizer, $format);
 
         $data['message'] = array();
 
         if ($this->messages->count() > 1) {
             foreach ($this->messages as $message) {
-                $data['message'][] = $message->normalize($serializer, $format);
+                $data['message'][] = $message->normalize($normalizer, $format);
             }
         } elseif ($this->messages->count()) {
-            $data['message'] = $this->messages[0]->normalize($serializer, $format);
+            $data['message'] = $this->messages[0]->normalize($normalizer, $format);
         }
 
         return $data;

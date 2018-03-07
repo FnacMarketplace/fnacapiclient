@@ -9,8 +9,8 @@
 
 namespace FnacApiClient\Entity;
 
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * OrderUpdate definition.
@@ -31,7 +31,7 @@ class OrderUpdate extends Entity
     /**
      * {@inheritDoc}
      */
-    public function normalize(SerializerInterface $serializer, $format = null)
+    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
     {
 
     }
@@ -39,7 +39,7 @@ class OrderUpdate extends Entity
     /**
      * {@inheritDoc}
      */
-    public function denormalize(SerializerInterface $serializer, $data, $format = null)
+    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
         $this->order_id = $data['order_id'];
         $this->status = $data['status'];
@@ -51,12 +51,12 @@ class OrderUpdate extends Entity
             if (isset($data['error'][0])) {
                 foreach ($data['error'] as $error) {
                     $tmpObj = new Error();
-                    $tmpObj->denormalize($serializer, $error, $format);
+                    $tmpObj->denormalize($denormalizer, $error, $format);
                     $this->errors[] = $tmpObj;
                 }
             } else {
                 $tmpObj = new Error();
-                $tmpObj->denormalize($serializer, $data['error'], $format);
+                $tmpObj->denormalize($denormalizer, $data['error'], $format);
                 $this->errors[] = $tmpObj;
             }
         }
@@ -67,12 +67,12 @@ class OrderUpdate extends Entity
             if (isset($data['order_detail'][0])) {
                 foreach ($data['order_detail'] as $order_detail) {
                     $tmpObj = new OrderDetailUpdate();
-                    $tmpObj->denormalize($serializer, $order_detail, $format);
+                    $tmpObj->denormalize($denormalizer, $order_detail, $format);
                     $this->orders_detail[] = $tmpObj;
                 }
             } else {
                 $tmpObj = new OrderDetailUpdate();
-                $tmpObj->denormalize($serializer, $data['order_detail'], $format);
+                $tmpObj->denormalize($denormalizer, $data['order_detail'], $format);
                 $this->orders_detail[] = $tmpObj;
             }
         }

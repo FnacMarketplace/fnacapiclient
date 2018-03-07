@@ -8,7 +8,7 @@
  */
 namespace FnacApiClient\Service\Request;
 
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * OfferQuery Offer query Service's definition.
@@ -125,9 +125,9 @@ class OfferQuery extends Query
     /**
      * {@inheritdoc}
      */
-    public function normalize(SerializerInterface $serializer, $format = null)
+    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
     {
-        $query = parent::normalize($serializer, $format);
+        $query = parent::normalize($normalizer, $format);
 
         if (!is_null($this->offer_fnac_id)) {
             $query['offer_fnac_id'] = $this->offer_fnac_id;

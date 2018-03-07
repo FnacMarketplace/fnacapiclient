@@ -9,7 +9,7 @@
 
 namespace FnacApiClient\Service\Request;
 
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use FnacApiClient\Entity\Comment;
 
 /**
@@ -40,18 +40,18 @@ class ClientOrderCommentUpdate extends Authentified
     /**
      * {@inheritdoc}
      */
-    public function normalize(SerializerInterface $serializer, $format = null)
+    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
     {
-        $data = parent::normalize($serializer, $format);
+        $data = parent::normalize($normalizer, $format);
 
         $data['comment'] = array();
 
         if ($this->comments->count() > 1) {
-            foreach ($this->comments as $coment) {
-                $data['comment'][] = $comment->normalize($serializer, $format);
+            foreach ($this->comments as $comment) {
+                $data['comment'][] = $comment->normalize($normalizer, $format);
             }
         } elseif ($this->comments->count()) {
-            $data['comment'] = $this->comments[0]->normalize($serializer, $format);
+            $data['comment'] = $this->comments[0]->normalize($normalizer, $format);
         }
 
         return $data;

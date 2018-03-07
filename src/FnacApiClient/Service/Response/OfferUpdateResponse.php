@@ -9,7 +9,7 @@
 
 namespace FnacApiClient\Service\Response;
 
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 /**
  * OfferUpdateResponse service base definition for offer update response.
@@ -24,9 +24,9 @@ class OfferUpdateResponse extends ResponseService
     /**
      * {@inheritdoc}
      */
-    public function denormalize(SerializerInterface $serializer, $data, $format = null)
+    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
-        parent::denormalize($serializer, $data, $format);
+        parent::denormalize($denormalizer, $data, $format);
 
         $this->batch_id = $data['batch_id'];
     }

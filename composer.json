@@ -6,7 +6,8 @@
         "monolog/monolog" : "1.*",
         "symfony/finder" : "2.0.*",
         "symfony/http-foundation": "2.3.*@dev",
-        "symfony/serializer": "2.0.*",
+        "symfony/serializer": "2.8.*",
+        "symfony/class-loader": "2.0.4",
         "symfony/yaml" : "2.0.*",
         "twbs/bootstrap": "^3.3",
         "components/jquery": "^2.2"

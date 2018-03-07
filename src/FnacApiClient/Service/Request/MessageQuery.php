@@ -9,7 +9,7 @@
 
 namespace FnacApiClient\Service\Request;
 
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * MessageQuery Service's definition.
@@ -37,9 +37,9 @@ class MessageQuery extends Query
     /**
      * {@inheritdoc}
      */
-    public function normalize(SerializerInterface $serializer, $format = null)
+    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
     {
-        $data = parent::normalize($serializer, $format);
+        $data = parent::normalize($normalizer, $format);
 
         if (!is_null($this->message_type)) {
             $data['message_type'] = $this->message_type;

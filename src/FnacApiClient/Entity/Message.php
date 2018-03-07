@@ -9,6 +9,8 @@
 
 namespace FnacApiClient\Entity;
 
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
 
@@ -49,7 +51,7 @@ class Message extends Entity
     /**
      * {@inheritDoc}
      */
-    public function normalize(SerializerInterface $serializer, $format = null)
+    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
     {
         $data = array();
 
@@ -76,7 +78,7 @@ class Message extends Entity
     /**
      * {@inheritDoc}
      */
-    public function denormalize(SerializerInterface $serializer, $data, $format = null)
+    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
         $this->message_referer = $data['message_referer']['#'];
         $this->message_referer_type = $data['message_referer']['@type'];

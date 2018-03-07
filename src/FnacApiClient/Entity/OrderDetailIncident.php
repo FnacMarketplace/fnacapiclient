@@ -9,6 +9,8 @@
 
 namespace FnacApiClient\Entity;
 
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
 
@@ -31,7 +33,7 @@ class OrderDetailIncident extends Entity
     /**
      * {@inheritDoc}
      */
-    public function normalize(SerializerInterface $serializer, $format = null)
+    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
     {
 
     }
@@ -39,7 +41,7 @@ class OrderDetailIncident extends Entity
     /**
      * {@inheritDoc}
      */
-    public function denormalize(SerializerInterface $serializer, $data, $format = null)
+    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
         $this->type = $data['type'];
         $this->status = $data['status'];
@@ -51,12 +53,12 @@ class OrderDetailIncident extends Entity
         if (isset($data['refunds']['refund'][0])) {
             foreach ($data['refunds']['refund'] as $refund) {
                 $tmpObj = new Refund();
-                $tmpObj->denormalize($serializer, $refund, $format);
+                $tmpObj->denormalize($denormalizer, $refund, $format);
                 $this->refunds[] = $tmpObj;
             }
         } elseif (!empty($data['refunds']['refund'])) {
             $tmpObj = new Refund();
-            $tmpObj->denormalize($serializer, $data['refunds']['refund'], $format);
+            $tmpObj->denormalize($denormalizer, $data['refunds']['refund'], $format);
             $this->refunds[] = $tmpObj;
         }
     }

@@ -9,7 +9,7 @@
 
 namespace FnacApiClient\Service\Response;
 
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use FnacApiClient\Entity\OrderUpdate;
 
 /**
@@ -25,9 +25,9 @@ class OrderUpdateResponse extends ResponseService
     /**
      * {@inheritdoc}
      */
-    public function denormalize(SerializerInterface $serializer, $data, $format = null)
+    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
-        parent::denormalize($serializer, $data, $format);
+        parent::denormalize($denormalizer, $data, $format);
 
         $this->orders_update = new \ArrayObject();
 
@@ -35,12 +35,12 @@ class OrderUpdateResponse extends ResponseService
             if (isset($data['order'][0])) {
                 foreach ($data['order'] as $order) {
                     $tmpObj = new OrderUpdate();
-                    $tmpObj->denormalize($serializer, $order, $format);
+                    $tmpObj->denormalize($denormalizer, $order, $format);
                     $this->orders_update[] = $tmpObj;
                 }
             } else {
                 $tmpObj = new OrderUpdate();
-                $tmpObj->denormalize($serializer, $data['order'], $format);
+                $tmpObj->denormalize($denormalizer, $data['order'], $format);
                 $this->orders_update[] = $tmpObj;
             }
         }

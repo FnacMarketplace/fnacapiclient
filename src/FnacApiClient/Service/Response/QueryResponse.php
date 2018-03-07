@@ -9,6 +9,7 @@
 
 namespace FnacApiClient\Service\Response;
 
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
@@ -27,9 +28,9 @@ abstract class QueryResponse extends ResponseService
     /**
      * {@inheritdoc}
      */
-    public function denormalize(SerializerInterface $serializer, $data, $format = null)
+    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
-        parent::denormalize($serializer, $data);
+        parent::denormalize($denormalizer, $data);
 
         $this->page = isset($data['page']) ? $data['page'] : 0;
         $this->total_paging = isset($data['total_paging']) ? $data['total_paging'] : 0;

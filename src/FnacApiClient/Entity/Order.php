@@ -9,6 +9,8 @@
 
 namespace FnacApiClient\Entity;
 
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
@@ -111,7 +113,7 @@ class Order extends Entity
     /**
      * {@inheritDoc}
      */
-    public function normalize(SerializerInterface $serializer, $format = null)
+    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
     {
         $data = array(
             '@order_id' => $this->order_id, '@action' => $this->order_action
@@ -120,10 +122,10 @@ class Order extends Entity
             if ($this->orders_detail->count() > 1) {
                 $data['order_detail'] = array();
                 foreach ($this->orders_detail as $order_detail) {
-                    $data['order_detail'][] = $order_detail->normalize($serializer, $format);
+                    $data['order_detail'][] = $order_detail->normalize($normalizer, $format);
                 }
             } else {
-                $data['order_detail'] = $this->orders_detail[0]->normalize($serializer, $format);
+                $data['order_detail'] = $this->orders_detail[0]->normalize($normalizer, $format);
             }
         }
         return $data;
@@ -132,7 +134,7 @@ class Order extends Entity
     /**
      * {@inheritDoc}
      */
-    public function denormalize(SerializerInterface $serializer, $data, $format = null)
+    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
         $this->shop_id = $data['shop_id'];
         $this->client_id = $data['client_id'];
@@ -147,9 +149,9 @@ class Order extends Entity
         $this->nb_messages = (integer) $data['nb_messages'];
         $this->delivery_note = isset($data['delivery_note']) ? $data['delivery_note'] : "";
         $this->shipping_address = new Address();
-        $this->shipping_address->denormalize($serializer, $data['shipping_address'], $format);
+        $this->shipping_address->denormalize($denormalizer, $data['shipping_address'], $format);
         $this->billing_address = new Address();
-        $this->billing_address->denormalize($serializer, $data['billing_address'], $format);
+        $this->billing_address->denormalize($denormalizer, $data['billing_address'], $format);
 
         $this->adherent_number = isset($data['adherent_number']) ? $data['adherent_number'] : "";
         $this->order_culture = isset($data['order_culture']) ? $data['order_culture'] : "";
@@ -160,12 +162,12 @@ class Order extends Entity
         if (isset($data['order_detail'][0])) {
             foreach ($data['order_detail'] as $order_detail) {
                 $tmpObj = new OrderDetail();
-                $tmpObj->denormalize($serializer, $order_detail, $format);
+                $tmpObj->denormalize($denormalizer, $order_detail, $format);
                 $this->orders_detail[] = $tmpObj;
             }
         } elseif (!empty($data['order_detail'])) {
             $tmpObj = new OrderDetail();
-            $tmpObj->denormalize($serializer, $data['order_detail'], $format);
+            $tmpObj->denormalize($denormalizer, $data['order_detail'], $format);
             $this->orders_detail[] = $tmpObj;
         }
     }

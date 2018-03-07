@@ -9,8 +9,7 @@
 
 namespace FnacApiClient\Entity;
 
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * Represent a Carrier
@@ -28,7 +27,7 @@ class Carrier extends Entity
     /**
      * {@inheritDoc}
      */
-    public function normalize(SerializerInterface $serializer, $format = null)
+    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array(), array $context = array(), array $context = array())
     {
 
     }
@@ -36,7 +35,7 @@ class Carrier extends Entity
     /**
      * {@inheritDoc}
      */
-    public function denormalize(SerializerInterface $serializer, $data, $format = null)
+    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
         $this->name = $data['name'];
         $this->code = $data['@code'];

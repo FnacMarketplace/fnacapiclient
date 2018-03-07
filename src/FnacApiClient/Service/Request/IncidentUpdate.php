@@ -9,7 +9,7 @@
 
 namespace FnacApiClient\Service\Request;
 
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 use FnacApiClient\Entity\IncidentOrder;
 
@@ -41,18 +41,18 @@ class IncidentUpdate extends Authentified
     /**
      * {@inheritdoc}
      */
-    public function normalize(SerializerInterface $serializer, $format = null)
+    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
     {
-        $data = parent::normalize($serializer, $format);
+        $data = parent::normalize($normalizer, $format);
 
         $data['order'] = array();
 
         if ($this->orders->count() > 1) {
             foreach ($this->orders as $order) {
-                $data['order'][] = $order->normalize($serializer, $format);
+                $data['order'][] = $order->normalize($normalizer, $format);
             }
         } elseif ($this->orders->count()) {
-            $data['order'] = $this->orders[0]->normalize($serializer, $format);
+            $data['order'] = $this->orders[0]->normalize($normalizer, $format);
         }
 
         return $data;

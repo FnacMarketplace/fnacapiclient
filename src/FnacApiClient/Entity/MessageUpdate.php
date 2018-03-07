@@ -9,6 +9,8 @@
 
 namespace FnacApiClient\Entity;
 
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
 
@@ -30,7 +32,7 @@ class MessageUpdate extends Entity
     /**
      * {@inheritDoc}
      */
-    public function normalize(SerializerInterface $serializer, $format = null)
+    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
     {
 
     }
@@ -38,7 +40,7 @@ class MessageUpdate extends Entity
     /**
      * {@inheritDoc}
      */
-    public function denormalize(SerializerInterface $serializer, $data, $format = null)
+    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
         $this->id = $data['@id'];
         $this->status = $data['@status'];
@@ -49,12 +51,12 @@ class MessageUpdate extends Entity
             if (isset($data['error'][0])) {
                 foreach ($data['error'] as $error) {
                     $tmpObj = new Error();
-                    $tmpObj->denormalize($serializer, $error, $format);
+                    $tmpObj->denormalize($denormalizer, $error, $format);
                     $this->errors[] = $tmpObj;
                 }
             } else {
                 $tmpObj = new Error();
-                $tmpObj->denormalize($serializer, $data['error'], $format);
+                $tmpObj->denormalize($denormalizer, $data['error'], $format);
                 $this->errors[] = $tmpObj;
             }
         }

@@ -9,6 +9,7 @@
 
 namespace FnacApiClient\Service\Request;
 
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
@@ -100,9 +101,9 @@ abstract class Authentified extends RequestService
     /**
      * {@inheritdoc}
      */
-    public function normalize(SerializerInterface $serializer, $format = null)
+    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
     {
-        return array_merge(parent::normalize($serializer, $format), array(
+        return array_merge(parent::normalize($normalizer, $format), array(
             '@shop_id' => $this->getShopId(), '@partner_id' => $this->getPartnerId(), '@token' => $this->getToken()
         ));
     }

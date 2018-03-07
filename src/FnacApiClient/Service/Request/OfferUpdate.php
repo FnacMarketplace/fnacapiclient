@@ -9,8 +9,7 @@
 
 namespace FnacApiClient\Service\Request;
 
-use Symfony\Component\Serializer\SerializerInterface;
-
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use FnacApiClient\Entity\Offer;
 
 /**
@@ -41,18 +40,18 @@ class OfferUpdate extends Authentified
     /**
      * {@inheritdoc}
      */
-    public function normalize(SerializerInterface $serializer, $format = null)
+    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
     {
-        $data = parent::normalize($serializer, $format);
+        $data = parent::normalize($normalizer, $format);
 
         $data['offer'] = array();
 
         if ($this->offers->count() > 1) {
             foreach ($this->offers as $offer) {
-                $data['offer'][] = $offer->normalize($serializer, $format);
+                $data['offer'][] = $offer->normalize($normalizer, $format);
             }
         } elseif ($this->offers->count()) {
-            $data['offer'] = $this->offers[0]->normalize($serializer, $format);
+            $data['offer'] = $this->offers[0]->normalize($normalizer, $format);
         }
 
         return $data;

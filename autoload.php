@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__.'/vendor/symfony/class-loader/Symfony/Component/ClassLoader/UniversalClassLoader.php';
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__.'/vendor/symfony/class-loader/UniversalClassLoader.php';
 
 use Symfony\Component\ClassLoader\UniversalClassLoader;
 
@@ -20,6 +21,8 @@ $loader->registerNamespaces(array(
     'Zend\Loader' => __DIR__.'/vendor/zendframework/zend-loader/src',
     'Monolog' => __DIR__.'/vendor/monolog/monolog/src',
     'Psr\Log' => __DIR__.'/vendor/psr/log',
+    'Symfony\Component\Serializer\Normalizer' => __DIR__.'/vendor/symfony/serializer/normalizer',
+    'Symfony\Component\Serializer\Encoder' => __DIR__.'/vendor/symfony/serializer/encoder',
     'Symfony\Component\Serializer' => __DIR__.'/vendor/symfony/serializer',
     'Symfony\Component\Yaml' => __DIR__.'/vendor/symfony/yaml',
     'Symfony\Component\HttpFoundation' => __DIR__.'/vendor/symfony/http-foundation',

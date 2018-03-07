@@ -9,8 +9,8 @@
 
 namespace FnacApiClient\Entity;
 
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * Represent a customer comment reply use when dealing with ClientOrderCommentUpdate
@@ -34,7 +34,7 @@ class Comment extends Entity
     /**
      * {@inheritDoc}
      */
-    public function normalize(SerializerInterface $serializer, $format = null)
+    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
     {
         return array(
             '@id' => $this->id, 'comment_reply' => $this->reply
@@ -44,7 +44,7 @@ class Comment extends Entity
     /**
      * {@inheritDoc}
      */
-    public function denormalize(SerializerInterface $serializer, $data, $format = null)
+    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
         $this->id = $data['@id'];
         $this->status = $data['@status'];
@@ -55,12 +55,12 @@ class Comment extends Entity
             if (isset($data['error'][0])) {
                 foreach ($data['error'] as $error) {
                     $tmpObj = new Error();
-                    $tmpObj->denormalize($serializer, $error, $format);
+                    $tmpObj->denormalize($denormalizer, $error, $format);
                     $this->errors[] = $tmpObj;
                 }
             } else {
                 $tmpObj = new Error();
-                $tmpObj->denormalize($serializer, $data['error'], $format);
+                $tmpObj->denormalize($denormalizer, $data['error'], $format);
                 $this->errors[] = $tmpObj;
             }
         }

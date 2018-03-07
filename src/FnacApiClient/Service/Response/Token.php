@@ -9,7 +9,8 @@
 
 namespace FnacApiClient\Service\Response;
 
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+
 
 /**
  * Token service base definition for response when using authentification.
@@ -25,10 +26,9 @@ class Token extends ResponseService
     /**
      * {@inheritdoc}
      */
-    public function denormalize(SerializerInterface $serializer, $data, $format = null)
+    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
-        parent::denormalize($serializer, $data, $format);
-
+        parent::denormalize($denormalizer, $data, $format);
         if(isset($data['token']))
         {
             $this->token = $data['token'];

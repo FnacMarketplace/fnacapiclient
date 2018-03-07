@@ -9,6 +9,7 @@
 
 namespace FnacApiClient\Service\Response;
 
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
 use FnacApiClient\Entity\Carrier;
@@ -26,14 +27,14 @@ class CarrierQueryResponse extends ResponseService
     /**
      * {@inheritdoc}
      */
-    public function denormalize(SerializerInterface $serializer, $data, $format = null)
+    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
-        parent::denormalize($serializer, $data, $format);
+        parent::denormalize($denormalizer, $data, $format);
 
         $this->carriers = new \ArrayObject();
         foreach ($data['carrier'] as $carrier) {
             $carrObj = new Carrier();
-            $carrObj->denormalize($serializer, $carrier, $format);
+            $carrObj->denormalize($denormalizer, $carrier, $format);
             $this->carriers[] = $carrObj;
         }
     }

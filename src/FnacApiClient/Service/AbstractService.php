@@ -9,7 +9,10 @@
 
 namespace FnacApiClient\Service;
 
+use Symfony\Component\Serializer\Normalizer\DenormalizableInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * fnacService service base definition.
@@ -17,7 +20,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
  * @author     Fnac
  * @version    1.0.0
  */
-abstract class AbstractService implements NormalizableInterface
+abstract class AbstractService implements NormalizableInterface, DenormalizableInterface
 {
     /**
      * Fnac namespace xml url
@@ -30,6 +33,16 @@ abstract class AbstractService implements NormalizableInterface
      * @var string
      */
     const ROOT_NAME = null;
+
+    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    {
+        // TODO: Implement normalize() method.
+    }
+
+    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
+    {
+        // TODO: Implement denormalize() method.
+    }
 
     /**
      * Get service name

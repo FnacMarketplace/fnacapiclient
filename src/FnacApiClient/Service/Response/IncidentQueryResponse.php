@@ -9,7 +9,7 @@
 
 namespace FnacApiClient\Service\Response;
 
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 use FnacApiClient\Entity\Incident;
 
@@ -26,21 +26,21 @@ class IncidentQueryResponse extends ResponseService
     /**
      * {@inheritdoc}
      */
-    public function denormalize(SerializerInterface $serializer, $data, $format = null)
+    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
-        parent::denormalize($serializer, $data, $format);
+        parent::denormalize($denormalizer, $data, $format);
 
         $this->incidents = new \ArrayObject();
         if (isset($data['incident'])) {
             if (isset($data['incident'][0])) {
                 foreach ($data['incident'] as $order_detail_incident) {
                     $tmpObj = new Incident();
-                    $tmpObj->denormalize($serializer, $order_detail_incident, $format);
+                    $tmpObj->denormalize($denormalizer, $order_detail_incident, $format);
                     $this->incidents[] = $tmpObj;
                 }
             } elseif (!empty($data['incident'])) {
                 $tmpObj = new Incident();
-                $tmpObj->denormalize($serializer, $data['incident'], $format);
+                $tmpObj->denormalize($denormalizer, $data['incident'], $format);
                 $this->incidents[] = $tmpObj;
             }
         }

@@ -9,7 +9,7 @@
 
 namespace FnacApiClient\Service\Request;
 
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * BatchQuery Service's definition.
@@ -27,8 +27,8 @@ class BatchQuery extends Query
     /**
      * {@inheritdoc}
      */
-    public function normalize(SerializerInterface $serializer, $format = null)
+    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
     {
-        return parent::normalize($serializer, $format);
+        return parent::normalize($normalizer, $format);
     }
 }

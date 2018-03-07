@@ -200,9 +200,8 @@ class Client
         else {
             $response_body = $response->getBody();
         }
-        
-        $data = $this->serializer->decode($response_body, 'xml');
 
+        $data = $this->serializer->decode($response_body, 'xml');
         $this->xml_response = $response->getBody();
 
         $this->log(sprintf(" Service Response Data  :\n %s", serialize($data)), Logger::DEBUG);

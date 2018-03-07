@@ -10,7 +10,8 @@
 namespace FnacApiClient\Service\Response;
 
 use FnacApiClient\Service\AbstractService;
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * ResponseService service base definition for response.
@@ -25,12 +26,12 @@ abstract class ResponseService extends AbstractService
     /**
      * {@inheritdoc}
      */
-    final public function normalize(SerializerInterface $serializer, $format = null)
+    final public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
     {
         throw new BadMethodCallException("Can't normalize a Response Service");
     }
 
-    public function denormalize(SerializerInterface $serializer, $data, $format = null)
+    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
         $this->status = $data['@status'];
     }

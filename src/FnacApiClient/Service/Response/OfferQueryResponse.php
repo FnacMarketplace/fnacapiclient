@@ -9,6 +9,7 @@
 
 namespace FnacApiClient\Service\Response;
 
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
 use FnacApiClient\Entity\Offer;
@@ -26,21 +27,21 @@ class OfferQueryResponse extends QueryResponse
     /**
      * {@inheritdoc}
      */
-    public function denormalize(SerializerInterface $serializer, $data, $format = null)
+    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
-        parent::denormalize($serializer, $data, $format);
+        parent::denormalize($denormalizer, $data, $format);
 
         $this->offers = new \ArrayObject();
         if (isset($data['offer'])) {
             if (isset($data['offer'][0])) {
                 foreach ($data['offer'] as $offer) {
                     $tmpObj = new Offer();
-                    $tmpObj->denormalize($serializer, $offer, $format);
+                    $tmpObj->denormalize($denormalizer, $offer, $format);
                     $this->offers[] = $tmpObj;
                 }
             } else {
                 $tmpObj = new Offer();
-                $tmpObj->denormalize($serializer, $data['offer'], $format);
+                $tmpObj->denormalize($denormalizer, $data['offer'], $format);
                 $this->offers[] = $tmpObj;
             }
         }

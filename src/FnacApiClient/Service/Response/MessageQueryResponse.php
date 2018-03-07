@@ -9,7 +9,7 @@
 
 namespace FnacApiClient\Service\Response;
 
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 use FnacApiClient\Entity\Message;
 
@@ -28,9 +28,9 @@ class MessageQueryResponse extends QueryResponse
     /**
      * {@inheritdoc}
      */
-    public function denormalize(SerializerInterface $serializer, $data, $format = null)
+    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
-        parent::denormalize($serializer, $data, $format);
+        parent::denormalize($denormalizer, $data, $format);
 
         $this->messages_unread_result = isset($data['messages_unread_result']) ? $data['messages_unread_result'] : null;
         $this->messages_read_result = isset($data['messages_read_result']) ? $data['messages_read_result'] : null;
@@ -41,12 +41,12 @@ class MessageQueryResponse extends QueryResponse
             if (isset($data['message'][0])) {
                 foreach ($data['message'] as $message) {
                     $tmpObj = new Message();
-                    $tmpObj->denormalize($serializer, $message, $format);
+                    $tmpObj->denormalize($denormalizer, $message, $format);
                     $this->messages[] = $tmpObj;
                 }
             } elseif (!empty($data['incident'])) {
                 $tmpObj = new Message();
-                $tmpObj->denormalize($serializer, $data['message'], $format);
+                $tmpObj->denormalize($denormalizer, $data['message'], $format);
                 $this->messages[] = $tmpObj;
             }
         }

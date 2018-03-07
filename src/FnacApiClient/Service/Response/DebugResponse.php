@@ -9,7 +9,7 @@
 
 namespace FnacApiClient\Service\Response;
 
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 /**
  * BatchQueryResponse service base definition for batch query response
@@ -19,7 +19,7 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 class DebugResponse extends ResponseService
 {
-    public function denormalize(SerializerInterface $serializer, $data, $format = null)
+    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
         print_r($data);
     }

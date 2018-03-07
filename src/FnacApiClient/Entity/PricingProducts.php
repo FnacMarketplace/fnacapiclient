@@ -9,8 +9,8 @@
 
 namespace FnacApiClient\Entity;
 
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * PricingProduct definition.
@@ -50,7 +50,7 @@ class PricingProducts extends Entity
     /**
      * {@inheritDoc}
      */
-    public function normalize(SerializerInterface $serializer, $format = null)
+    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
     {
 
     }
@@ -58,10 +58,10 @@ class PricingProducts extends Entity
     /**
      * {@inheritDoc}
      */
-    public function denormalize(SerializerInterface $serializer, $data, $format = null)
+    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
         $this->product_reference = new ProductReference();
-        $this->product_reference->denormalize($serializer, $data['product_reference'], $format);
+        $this->product_reference->denormalize($denormalizer, $data['product_reference'], $format);
 
         // using Fnac Marketplace pricing service V1
         if (isset($data['pricing'])) {
@@ -74,12 +74,12 @@ class PricingProducts extends Entity
             if (isset($data['pricing'][0])) {
                 foreach ($data['pricing'] as $pricing) {
                     $tmpObj = new Pricing();
-                    $tmpObj->denormalize($serializer, $pricing, $format);
+                    $tmpObj->denormalize($denormalizer, $pricing, $format);
                     $this->pricings[] = $tmpObj;
                 }
             } elseif (!empty($data['pricing'])) {
                 $tmpObj = new Pricing();
-                $tmpObj->denormalize($serializer, $data['pricing'], $format);
+                $tmpObj->denormalize($denormalizer, $data['pricing'], $format);
                 $this->pricings[] = $tmpObj;
             }
         }

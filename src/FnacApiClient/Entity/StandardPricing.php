@@ -9,10 +9,8 @@
 
 namespace FnacApiClient\Entity;
 
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
-
-use FnacApiClient\Entity\RankedOffer;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * Pricing definition.
@@ -30,7 +28,7 @@ class StandardPricing extends Entity
     /**
      * {@inheritDoc}
      */
-    public function normalize(SerializerInterface $serializer, $format = null)
+    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
     {
 
     }
@@ -38,7 +36,7 @@ class StandardPricing extends Entity
     /**
      * {@inheritDoc}
      */
-    public function denormalize(SerializerInterface $serializer, $data, $format = null)
+    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
         $this->seller_offer_price = isset($data['seller_offer']['price']) ? $data['seller_offer']['price'] : "";
         $this->seller_offer_shipping_price = isset($data['seller_offer']['shipping_price']) ? $data['seller_offer']['shipping_price'] : "";
@@ -48,12 +46,12 @@ class StandardPricing extends Entity
         if (isset($data['ranked_offers'][0])) {
             foreach ($data['ranked_offers'] as $ranked_offer) {
                 $tmpObj = new RankedOffer();
-                $tmpObj->denormalize($serializer, $ranked_offer, $format);
+                $tmpObj->denormalize($denormalizer, $ranked_offer, $format);
                 $this->ranked_offers[] = $tmpObj;
             }
         } elseif (!empty($data['ranked_offers'])) {
             $tmpObj = new RankedOffer();
-            $tmpObj->denormalize($serializer, $data['ranked_offers'], $format);
+            $tmpObj->denormalize($denormalizer, $data['ranked_offers'], $format);
             $this->ranked_offers[] = $tmpObj;
         }
     }

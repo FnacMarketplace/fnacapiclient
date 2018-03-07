@@ -9,6 +9,7 @@
 
 namespace FnacApiClient\Service\Response;
 
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
 use FnacApiClient\Entity\Comment;
@@ -26,9 +27,9 @@ class ClientOrderCommentUpdateResponse extends ResponseService
     /**
      * {@inheritdoc}
      */
-    public function denormalize(SerializerInterface $serializer, $data, $format = null)
+    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
-        parent::denormalize($serializer, $data, $format);
+        parent::denormalize($denormalizer, $data, $format);
 
         $this->comments = new \ArrayObject();
 
@@ -36,12 +37,12 @@ class ClientOrderCommentUpdateResponse extends ResponseService
             if (isset($data['comment'][0])) {
                 foreach ($data['comment'] as $comment) {
                     $tmpObj = new Comment();
-                    $tmpObj->denormalize($serializer, $comment, $format);
+                    $tmpObj->denormalize($denormalizer, $comment, $format);
                     $this->comments[] = $tmpObj;
                 }
             } elseif (!empty($data['comment'])) {
                 $tmpObj = new Comment();
-                $tmpObj->denormalize($serializer, $data['comment'], $format);
+                $tmpObj->denormalize($denormalizer, $data['comment'], $format);
                 $this->comments[] = $tmpObj;
             }
         }

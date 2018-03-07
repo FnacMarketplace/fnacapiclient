@@ -9,6 +9,7 @@
 
 namespace FnacApiClient\Service\Request;
 
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
@@ -42,9 +43,9 @@ class OrderQuery extends Query
     /**
      * {@inheritdoc}
      */
-    public function normalize(SerializerInterface $serializer, $format = null)
+    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
     {
-        $data = parent::normalize($serializer, $format);
+        $data = parent::normalize($normalizer, $format);
 
         if (!is_null($this->sort_by_type)) {
             $data['sort_by'] = $this->sort_by_type;

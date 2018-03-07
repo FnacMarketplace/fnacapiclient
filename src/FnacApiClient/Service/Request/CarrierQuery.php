@@ -9,7 +9,7 @@
 
 namespace FnacApiClient\Service\Request;
 
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * CarrierQuery Service's definition.
@@ -27,9 +27,9 @@ class CarrierQuery extends Authentified
     /**
      * {@inheritdoc}
      */
-    public function normalize(SerializerInterface $serializer, $format = null)
+    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
     {
-        return array_merge(parent::normalize($serializer, $format), array(
+        return array_merge(parent::normalize($normalizer, $format), array(
             'query' => 'all'
         ));
     }

@@ -9,6 +9,8 @@
 
 namespace FnacApiClient\Entity;
 
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
 
@@ -44,7 +46,7 @@ class IncidentOrder extends Entity
     /**
      * {@inheritDoc}
      */
-    public function normalize(SerializerInterface $serializer, $format = null)
+    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
     {
         $data = array();
 
@@ -62,10 +64,10 @@ class IncidentOrder extends Entity
 
             if ($this->orders_details_incident->count() > 1) {
                 foreach ($this->orders_details_incident as $order_details_incident) {
-                    $data['order_detail'][] = $order_details_incident->normalize($serializer, $format);
+                    $data['order_detail'][] = $order_details_incident->normalize($normalizer, $format);
                 }
             } elseif ($this->orders_details_incident->count()) {
-                $data['order_detail'] = $this->orders_details_incident[0]->normalize($serializer, $format);
+                $data['order_detail'] = $this->orders_details_incident[0]->normalize($normalizer, $format);
             }
         }
 
@@ -75,7 +77,7 @@ class IncidentOrder extends Entity
     /**
      * {@inheritDoc}
      */
-    public function denormalize(SerializerInterface $serializer, $data, $format = null)
+    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
     }
 

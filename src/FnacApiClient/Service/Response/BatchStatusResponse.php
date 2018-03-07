@@ -9,6 +9,7 @@
 
 namespace FnacApiClient\Service\Response;
 
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
 use FnacApiClient\Entity\Error;
@@ -29,9 +30,9 @@ class BatchStatusResponse extends ResponseService
     /**
      * {@inheritdoc}
      */
-    public function denormalize(SerializerInterface $serializer, $data, $format = null)
+    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
-        parent::denormalize($serializer, $data, $format);
+        parent::denormalize($denormalizer, $data, $format);
 
         $this->batch_id = isset($data['batch_id']) ? $data['batch_id'] : "";
 
@@ -41,12 +42,12 @@ class BatchStatusResponse extends ResponseService
             if (isset($data['error'][0])) {
                 foreach ($data['error'] as $error) {
                     $tmpObj = new Error();
-                    $tmpObj->denormalize($serializer, $error, $format);
+                    $tmpObj->denormalize($denormalizer, $error, $format);
                     $this->errors[] = $tmpObj;
                 }
             } elseif (!empty($data['error'])) {
                 $tmpObj = new Error();
-                $tmpObj->denormalize($serializer, $data['error'], $format);
+                $tmpObj->denormalize($denormalizer, $data['error'], $format);
                 $this->errors[] = $tmpObj;
             }
         }
@@ -57,12 +58,12 @@ class BatchStatusResponse extends ResponseService
             if (isset($data['offer'][0])) {
                 foreach ($data['offer'] as $offer) {
                     $tmpObj = new OfferUpdate();
-                    $tmpObj->denormalize($serializer, $offer, $format);
+                    $tmpObj->denormalize($denormalizer, $offer, $format);
                     $this->offers[] = $tmpObj;
                 }
             } elseif (!empty($data['offer'])) {
                 $tmpObj = new OfferUpdate();
-                $tmpObj->denormalize($serializer, $data['offer'], $format);
+                $tmpObj->denormalize($denormalizer, $data['offer'], $format);
                 $this->offers[] = $tmpObj;
             }
         }

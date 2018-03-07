@@ -9,6 +9,7 @@
 
 namespace FnacApiClient\Service\Request;
 
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
 use FnacApiClient\Entity\ProductReference;
@@ -41,9 +42,9 @@ class PricingQuery extends Authentified
     /**
      * {@inheritdoc}
      */
-    public function normalize(SerializerInterface $serializer, $format = null)
+    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
     {
-        $data = parent::normalize($serializer, $format);
+        $data = parent::normalize($normalizer, $format);
 
         if (!is_null($this->sellers)) {
             $data['@sellers'] = $this->sellers;
@@ -53,10 +54,10 @@ class PricingQuery extends Authentified
 
         if ($this->product_reference->count() > 1) {
             foreach ($this->product_reference as $product_reference) {
-                $data['product_reference'][] = $product_reference->normalize($serializer, $format);
+                $data['product_reference'][] = $product_reference->normalize($normalizer, $format);
             }
         } elseif ($this->product_reference->count()) {
-            $data['product_reference'] = $this->product_reference[0]->normalize($serializer, $format);
+            $data['product_reference'] = $this->product_reference[0]->normalize($normalizer, $format);
         }
 
         return $data;

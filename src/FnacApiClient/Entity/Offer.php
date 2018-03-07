@@ -9,6 +9,8 @@
 
 namespace FnacApiClient\Entity;
 
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
 use FnacApiClient\Type\ProductType;
@@ -69,7 +71,7 @@ class Offer extends Entity
     /**
      * {@inheritDoc}
      */
-    public function normalize(SerializerInterface $serializer, $format = null)
+    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
     {
         $data = array();
 
@@ -127,7 +129,7 @@ class Offer extends Entity
     /**
      * {@inheritDoc}
      */
-    public function denormalize(SerializerInterface $serializer, $data, $format = null)
+    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
         $this->product_name = $data['product_name'];
         $this->product_fnac_id = $data['product_fnac_id'];
@@ -163,7 +165,7 @@ class Offer extends Entity
         if(isset($data['promotion']))
         {
             $tmpObj = new Promotion();
-            $tmpObj->denormalize($serializer, $data['promotion'], $format);
+            $tmpObj->denormalize($denormalizer, $data['promotion'], $format);
             $this->promotion = $tmpObj;
         }
     }

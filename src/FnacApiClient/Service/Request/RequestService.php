@@ -10,6 +10,8 @@
 namespace FnacApiClient\Service\Request;
 
 use FnacApiClient\Service\AbstractService;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use FnacApiClient\Toolbox\StringObject;
 
@@ -45,7 +47,7 @@ abstract class RequestService extends AbstractService
     /**
      * {@inheritdoc}
      */
-    final public function denormalize(SerializerInterface $serializer, $data, $format = null)
+    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
         throw new BadMethodCallException("Can't denormalize a Request Service");
     }
@@ -102,7 +104,7 @@ abstract class RequestService extends AbstractService
     /**
      * {@inheritdoc}
      */
-    public function normalize(SerializerInterface $serializer, $format = null)
+    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
     {
         return array(
             '@xmlns' => static::FNAC_XMLNS
