@@ -9,7 +9,8 @@ Fnac.com offers a REST API to take control over your account and this library ca
 Make sure your PHP version is at least 5.3.2, and that you have php5-xsl mod installed.
 You will also need to have composer installed on your host.
 
-Simply clone the project into a private directory:
+Simply clone the project into a private directory:  
+/!\ Important /!\ if you use symfony 2.8 please use the version tagged v2.0
 
 ```shell
 git clone https://github.com/FnacMarketplace/fnacapiclient.git
